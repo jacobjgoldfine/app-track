@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 import SignupForm from './components/SignupForm'
-import SigninForm from './components/SigninForm'
+import LoginForm from './components/LoginForm'
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -27,8 +27,8 @@ function App() {
             <Route exact path="/signup">
               <SignupForm />
             </Route>
-            <Route exact path="/signin">
-              <SigninForm />
+            <Route exact path="/login">
+              <LoginForm />
             </Route>
           </div>
           <Footer />

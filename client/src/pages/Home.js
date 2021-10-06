@@ -1,12 +1,12 @@
 import React from 'react';
-import SignupForm from '../components/SigninForm';
+import LoginForm from '../components/LoginForm';
 
 
 const Home = () => {
   return (
     <main>
       <div className="flex-row justify-center">
-        <SignupForm/> 
+        <LoginForm/> 
       </div>
     </main>
   );
