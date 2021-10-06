@@ -1,5 +1,5 @@
 {
-  "name": "tech-friends",
+  "name": "app-track",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
@@ -15,5 +15,15 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^5.1.0"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.1",
+    "@mui/material": "^5.0.2",
+    "@mui/styled-engine-sc": "^5.0.0",
+    "install": "^0.13.0",
+    "npm": "^7.24.2",
+    "styled-components": "^5.3.1"
   }
 }
