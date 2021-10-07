@@ -1,0 +1,131 @@
+{
+  "lanes": [
+    {
+      "id": "APPLIED",
+      "title": "Submitted Applications",
+      "label": "20/70",
+      "style": { "width": 280 },
+      "cards": [
+        {
+          "id": "Example1",
+          "jobTitle": "Senior Developer",
+          "companyName": "Tech Inc",
+          "cardStyle": {
+            "width": 270,
+            "maxWidth": 270,
+            "margin": "auto",
+            "marginBottom": 5
+          },
+          "salary": 120000,
+          "location": "Dallas, TX",
+          "date_submitted": "10/06/2021",
+          "user_id": 1
+        },
+        {
+          "id": "Example2",
+          "jobTitle": "React front-end Developer",
+          "companyName": "JP Morgan Chase",
+          "cardStyle": {
+            "width": 270,
+            "maxWidth": 270,
+            "margin": "auto",
+            "marginBottom": 5
+          },
+          "salary": 65000,
+          "location": "Dallas, TX",
+          "date_submitted": "09/23/2021",
+          "user_id": 1
+        },
+        {
+          "id": "Example3",
+          "jobTitle": "Full Stack Web Developer",
+          "companyName": "Google",
+          "cardStyle": {
+            "width": 270,
+            "maxWidth": 270,
+            "margin": "auto",
+            "marginBottom": 5
+          },
+          "salary": 80000,
+          "location": "Dallas, TX",
+          "date_submitted": "10/10/2021",
+          "user_id": 1
+        }
+      ]
+    },
+    {
+      "id": "WISHLIST",
+      "title": "Dream Job Wishlist",
+      "label": "10/20",
+      "style": { "width": 280 },
+      "cards": [
+        {
+          "id": "Example4",
+          "jobTitle": "Senior Developer",
+          "companyName": "Tech Inc",
+          "cardStyle": {
+            "width": 270,
+            "maxWidth": 270,
+            "margin": "auto",
+            "marginBottom": 5
+          },
+          "salary": 120000,
+          "location": "Dallas, TX",
+          "date_submitted": "10/06/2021",
+          "user_id": 1
+        },
+        {
+          "id": "Example5",
+          "jobTitle": "React front-end Developer",
+          "companyName": "JP Morgan Chase",
+          "cardStyle": {
+            "width": 270,
+            "maxWidth": 270,
+            "margin": "auto",
+            "marginBottom": 5
+          },
+          "salary": 65000,
+          "location": "Dallas, TX",
+          "date_submitted": "09/23/2021",
+          "user_id": 1
+        },
+        {
+          "id": "Example6",
+          "jobTitle": "Full Stack Web Developer",
+          "companyName": "Google",
+          "cardStyle": {
+            "width": 270,
+            "maxWidth": 270,
+            "margin": "auto",
+            "marginBottom": 5
+          },
+          "salary": 80000,
+          "location": "Dallas, TX",
+          "date_submitted": "10/10/2021",
+          "user_id": 1
+        }
+      ]
+    },
+    {
+      "id": "REJECTED",
+      "title": "Rejected offers",
+      "label": "0/0",
+      "style": { "width": 280 },
+      "cards": []
+    },
+    {
+      "id": "WAITING",
+      "title": "Waiting for Response",
+      "label": "0/0",
+      "style": { "width": 280 },
+      "cards": []
+    },
+    {
+      "id": "NORESPONSE",
+      "title": "No Response",
+      "label": "0/0",
+      "style": { "width": 280 },
+      "cards": []
+    }
+  ]
+}
