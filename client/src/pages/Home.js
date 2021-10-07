@@ -1,35 +1,19 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
-
-import ProfileList from '../components/ProfileList';
-import ProfileForm from '../components/ProfileForm';
-
-import { QUERY_PROFILES } from '../utils/queries';
+import React from "react";
+import LoginForm from "../components/LoginForm";
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_PROFILES);
-  const profiles = data?.profiles || [];
-
   return (
     <main>
       <div className="flex-row justify-center">
-        <div
-          className="col-12 col-md-10 mb-3 p-3"
-          style={{ border: '1px dotted #1a1a1a' }}
-        >
-          <ProfileForm />
+        <div className="flex-row justify-center">
+          <p id="home-paragraph">
+            Organization is the key to success! Create an account to keep track,
+            organize, and sort all the employers you have applied to. Keeping
+            your eye on the prize will allow you to easily see your progress.
+            Good luck!{" "}
+          </p>
         </div>
-
-        <div className="col-12 col-md-10 my-3">
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <ProfileList
-              profiles={profiles}
-              title="Here's the current roster of friends..."
-            />
-          )}
-        </div>
+        <LoginForm />
       </div>
     </main>
   );
