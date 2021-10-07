@@ -1,13 +1,13 @@
-const { Profile } = require('../models');
+const { Application, User } = require('../models');
 
 const resolvers = {
   Query: {
-    profiles: async () => {
-      return Profile.find();
+    getAllApplications: async () => {
+      return Application.find();
     },
 
-    profile: async (parent, { profileId }) => {
-      return Profile.findOne({ _id: profileId });
+    getUser: async (parent, { userId }) => {
+      return User.findOne({ _id: userId });
     },
   },
 

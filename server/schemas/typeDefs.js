@@ -18,7 +18,9 @@ const typeDefs = gql`
     location: String
   }
   type Query {
- 
+    getUser: User!
+    getAllApplications: Application
+
   }
 
   type Mutation {
