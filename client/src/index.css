@@ -1,6 +1,9 @@
-homeBtn {
-  display: flex;
-  position: relative;
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap");
+
+#home-paragraph {
+  font-size: 30px;
+  text-align: center;
+  font-family: "Roboto Mono", monospace;
 }
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
