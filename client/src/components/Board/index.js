@@ -9,11 +9,19 @@ const handleDragStart = (cardId, laneId) => {
   console.log(`laneId: ${laneId}`);
 };
 
-const handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
+const handleDragEnd = (
+  cardId,
+  sourceLaneId,
+  targetLaneId,
+  cardDetails,
+  position
+) => {
   console.log("drag ended");
   console.log(`cardId: ${cardId}`);
   console.log(`sourceLaneId: ${sourceLaneId}`);
   console.log(`targetLaneId: ${targetLaneId}`);
+  console.log(`cardDetails : ${cardDetails}`);
+  console.log("postion", position);
 };
 
 class App extends Component {
@@ -74,13 +82,13 @@ class App extends Component {
   };
 
   shouldReceiveNewData = (nextData) => {
-    console.log("New card has been added");
-    console.log(nextData);
+    // console.log("New card has been added");
+    // console.log(nextData);
   };
 
   handleCardAdd = (card, laneId) => {
-    console.log(`New card added to lane ${laneId}`);
-    console.dir(card);
+    // console.log(`New card added to lane ${laneId}`);
+    // console.dir(card);
   };
 
   render() {
@@ -96,16 +104,18 @@ class App extends Component {
           <button onClick={this.addCard} style={{ margin: 5 }}>
             Add Blocked
           </button> */}
-          <Board
-            editable
-            onCardAdd={this.handleCardAdd}
-            data={this.state.boardData}
-            draggable={false}
-            onDataChange={this.shouldReceiveNewData}
-            eventBusHandle={this.setEventBus}
-            handleDragStart={handleDragStart}
-            handleDragEnd={handleDragEnd}
-          />
+          <React.Fragment>
+            <Board
+              editable
+              onCardAdd={this.handleCardAdd}
+              data={this.state.boardData}
+              draggable={false}
+              onDataChange={this.shouldReceiveNewData}
+              eventBusHandle={this.setEventBus}
+              handleDragStart={handleDragStart}
+              handleDragEnd={handleDragEnd}
+            />
+          </React.Fragment>
         </div>
       </div>
     );
