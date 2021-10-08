@@ -2,9 +2,6 @@ const { Schema, model } = require("mongoose");
 // const dateFormat = require("../utils/dateFormat");
 
 const applicationSchema = new Schema({
-  _id: {
-    type: Number,
-  },
   jobTitle: {
     type: String,
     required: true,
