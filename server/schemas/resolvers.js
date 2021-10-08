@@ -8,8 +8,8 @@ const resolvers = {
       return Application.find();
     },
 
-    getUser: async (parent, { userId }) => {
-      return User.findOne({ _id: userId });
+    getUser: async (parent, { email }) => {
+      return User.findOne({ email: email });
     },
   },
 
@@ -33,6 +33,16 @@ const resolvers = {
 
       const token = signToken(user);
       return { token, user };
+    },
+
+    addApplication: async (parent, {jobTitle, companyName, salary, location}) => {
+      const application = await Application.create({jobTitle, companyName, salary, location});
+
+      await User.findOneAndUpdate(
+        {$addToSet: {applications: application._id}}
+      );
+        
+      return application;
     },
 
     // removeProfile: async (parent, { profileId }) => {
