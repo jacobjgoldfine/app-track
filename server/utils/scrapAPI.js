@@ -14,3 +14,8 @@ const ParseURLScrape = async () => {
 };
 
 ParseURLScrape();
+
+// addProfile: async (parent, { url }) => {
+//   const data = await scrapAPI(url);
+//   return Profile.create({ name });
+// },

@@ -100,7 +100,7 @@ class App extends Component {
             editable
             onCardAdd={this.handleCardAdd}
             data={this.state.boardData}
-            draggable
+            draggable={false}
             onDataChange={this.shouldReceiveNewData}
             eventBusHandle={this.setEventBus}
             handleDragStart={handleDragStart}
