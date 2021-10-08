@@ -1,4 +1,4 @@
-const { Profile } = require('../models');
+const { Profile } = require("../models");
 
 const resolvers = {
   Query: {
@@ -12,9 +12,11 @@ const resolvers = {
   },
 
   Mutation: {
-    addProfile: async (parent, { name }) => {
+    addProfile: async (parent, { url }) => {
+      const data = await scrapAPI(url);
       return Profile.create({ name });
     },
+
     addSkill: async (parent, { profileId, skill }) => {
       return Profile.findOneAndUpdate(
         { _id: profileId },
@@ -31,11 +33,7 @@ const resolvers = {
       return Profile.findOneAndDelete({ _id: profileId });
     },
     removeSkill: async (parent, { profileId, skill }) => {
-      return Profile.findOneAndUpdate(
-        { _id: profileId },
-        { $pull: { skills: skill } },
-        { new: true }
-      );
+      return Profile.findOneAndUpdate({ _id: profileId }, { $pull: { skills: skill } }, { new: true });
     },
   },
 };
