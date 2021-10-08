@@ -4,6 +4,9 @@ const {signToken} = require('../utils/auth')
 
 const resolvers = {
   Query: {
+    users: async () => {
+      return User.find().populate('user');
+    },
     applications: async (parent, { email }) => {
       const params = email ? { email } : {};
       return Application.find(params).sort ({date_submitted: -1})

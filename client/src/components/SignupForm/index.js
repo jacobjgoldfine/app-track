@@ -32,7 +32,8 @@ const theme = createTheme();
 
 const SignupForm =() => {
   const [formState, setFormState] = useState({
-    username: '',
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
   });
@@ -63,9 +64,10 @@ const SignupForm =() => {
 
     // clear form values
     setFormState({
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
-      username: '',
     });
   };
 

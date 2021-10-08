@@ -25,6 +25,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    users: [User]
     application(applicationId: ID!): Application
     applications(email: String): [Application]
     me: User
