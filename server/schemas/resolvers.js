@@ -4,18 +4,28 @@ const {signToken} = require('../utils/auth')
 
 const resolvers = {
   Query: {
-    getAllApplications: async () => {
-      return Application.find();
+    applications: async (parent, { email }) => {
+      const params = email ? { email } : {};
+      return Application.find(params).sort ({date_submitted: -1})
     },
 
-    getUser: async (parent, { email }) => {
-      return User.findOne({ email: email });
+    application: async (parent, { applicationId }) => {
+      return Application.findOne({ _id: applicationId });
+    },
+    
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate('applications');
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
   },
 
   Mutation: {
     addUser: async (parent, { firstName, lastName, email, password }) => {
-      return User.create({ firstName, lastName, email, password });
+      const user = await User.create({ firstName, lastName, email, password })
+      const token = signToken(user);
+      return {token, user};
     },
     
     login: async (parent, { email, password }) => {
@@ -35,26 +45,24 @@ const resolvers = {
       return { token, user };
     },
 
-    addApplication: async (parent, {jobTitle, companyName, salary, location}) => {
-      const application = await Application.create({jobTitle, companyName, salary, location});
+    addApplication: async (parent, { jobTitle, companyName, salary, location }, context) => {
+      if (context.user) {
+        const application = await Application.create({
+          jobTitle, 
+          companyName, 
+          salary, 
+          location
+        });
 
-      await User.findOneAndUpdate(
-        {$addToSet: {applications: application._id}}
-      );
-        
-      return application;
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { applications: application._id } }
+        );
+
+        return application;
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
-
-    // removeProfile: async (parent, { profileId }) => {
-    //   return Profile.findOneAndDelete({ _id: profileId });
-    // },
-    // removeSkill: async (parent, { profileId, skill }) => {
-    //   return Profile.findOneAndUpdate(
-    //     { _id: profileId },
-    //     { $pull: { skills: skill } },
-    //     { new: true }
-    //   );
-    // },
   },
 };
 
