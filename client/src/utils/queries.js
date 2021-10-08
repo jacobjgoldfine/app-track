@@ -1,11 +1,42 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_PROFILES = gql`
-  query allProfiles {
-    profiles {
+//will go on the job board area
+const QUERY_ALL_APPLICATIONS =gql`
+  query applications{
+    applications{
       _id
-      name
-      skills
     }
   }
 `;
+
+// this will also go on the job board, not sure if we want to incldue filters for the board so you can sort ?
+const QUERY_SINGLE_APPLICATION =gql`
+  query application (applicationId: ID!) {
+    application(applicationId: $applicationId){
+      _id
+      jobTitle
+      companyName
+      date_submitted
+      salary
+      location
+    }
+  }
+`;
+
+export const QUERY_ME = gql`
+  query me {
+    me {
+      _id
+      username
+      email
+      thoughts {
+        _id
+        thoughtText
+        thoughtAuthor
+        createdAt
+      }
+    }
+  }
+`;
+
+
