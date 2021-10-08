@@ -14,8 +14,8 @@ const resolvers = {
   },
 
   Mutation: {
-    addUser: async (parent, { name }) => {
-      return Profile.create({ name });
+    addUser: async (parent, { firstName, lastName, email, password }) => {
+      return User.create({ firstName, lastName, email, password });
     },
     
     login: async (parent, { email, password }) => {
@@ -25,7 +25,7 @@ const resolvers = {
         throw new AuthenticationError('Incorrect credentials');
       }
 
-      const correctPw = await profile.isCorrectPassword(password);
+      const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
