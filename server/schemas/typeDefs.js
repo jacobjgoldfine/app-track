@@ -17,7 +17,6 @@ const typeDefs = gql`
     date_submitted: String
     salary: String
     location: String
-    user_id: ID!
   }
 
   type Auth {
@@ -27,12 +26,13 @@ const typeDefs = gql`
 
   type Query {
     getAllApplications: Application
-    getUser(userId: ID!): User
+    getUser(email: String!): User
   }
 
   type Mutation {
     login(email: String!, password: String!): User
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): User
+    addApplication(jobTitle: String!, companyName: String!, salary: String, location: String): Application
   }
 `;
 
