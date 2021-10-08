@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_PROFILE } from '../../utils/mutations';
+import { ADD_USER } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 function Copyright(props) {
@@ -37,7 +37,7 @@ const SignupForm =() => {
     password: '',
   });
 
-  const [addUser] = useMutation(ADD_PROFILE);
+  const [addUser] = useMutation(ADD_USER);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
