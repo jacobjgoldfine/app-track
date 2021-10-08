@@ -13,8 +13,8 @@ const typeDefs = gql`
     _id: ID
     jobTitle: String!
     companyName: String!
-    date_submitted: Date
-    salary: Number
+    date_submitted: String
+    salary: String
     location: String
   }
 
@@ -24,14 +24,13 @@ const typeDefs = gql`
   }
 
   type Query {
-    login(email: String!, password: String!): User
     getAllApplications: Application
-    addUser:(username: String!, email: String!, password: String!): Auth
-
+    getUser(userId: ID!): User
   }
 
   type Mutation {
-  
+    login(email: String!, password: String!): User
+    addUser(username: String!, email: String!, password: String!): Auth
   }
 `;
 
