@@ -1,7 +1,33 @@
 import React, { Component } from "react";
-import Board from "react-trello";
+import Board, { BoardContainer } from "react-trello";
+import BasicModal from "./modal";
+import Card from "react-trello";
+import { DragHandleRounded } from "@mui/icons-material";
 
-const data = require("./data.json");
+const cards = require("./data.json");
+
+const data = {
+  lanes: [
+    {
+      id: "APPLIED",
+      title: "Submitted Applications",
+      style: { width: 350 },
+      cards: [],
+    },
+    {
+      id: "WISHLIST",
+      title: "Job Wishlist",
+      style: { width: 350 },
+      cards: [],
+    },
+    {
+      id: "REJECTED",
+      title: "Rejected offers",
+      style: { width: 350 },
+      cards: [],
+    },
+  ],
+};
 
 const handleDragStart = (cardId, laneId) => {
   console.log("drag started");
@@ -9,6 +35,7 @@ const handleDragStart = (cardId, laneId) => {
   console.log(`laneId: ${laneId}`);
 };
 
+// mutation send back the targetLaneId as LaneId
 const handleDragEnd = (
   cardId,
   sourceLaneId,
@@ -16,19 +43,27 @@ const handleDragEnd = (
   cardDetails,
   position
 ) => {
-  console.log("drag ended");
-  console.log(`cardId: ${cardId}`);
-  console.log(`sourceLaneId: ${sourceLaneId}`);
-  console.log(`targetLaneId: ${targetLaneId}`);
-  console.log(`cardDetails : ${cardDetails}`);
-  console.log("postion", position);
+  // console.log("drag ended");
+  // console.log(`cardId: ${cardId}`);
+  // console.log(`sourceLaneId: ${sourceLaneId}`);
+  // console.log(`targetLaneId: ${targetLaneId}`);
+  // console.log(`cardDetails : ${cardDetails}`);
+  // console.log("postion", position);
 };
+
+//need to create modal to pop when clicked
+// const onCardClick = (cardId, metadata) => {
+
+// };
+
+console.log(BoardContainer.id);
 
 class App extends Component {
   state = { boardData: { lanes: [] } };
 
   setEventBus = (eventBus) => {
     this.setState({ eventBus });
+    console.log(eventBus);
   };
 
   async componentWillMount() {
@@ -42,43 +77,22 @@ class App extends Component {
     });
   }
 
-  completeCard = () => {
-    //adding card to the lane
-    this.state.eventBus.publish({
-      type: "ADD_CARD",
-      laneId: "APPLIED",
-      card: {
-        id: "Example1",
-        jobTitle: "Senior Developer",
-        companyName: "Tech Inc",
-        salary: 120000,
-        location: "Dallas, TX",
-        date_submitted: "10/06/2021",
-        user_id: 1,
-      },
-    });
-    //removing card from the lane
-    this.state.eventBus.publish({
-      type: "REMOVE_CARD",
-      laneId: "WISHLIST",
-      cardId: "Example1",
-    });
-  };
-
+  // default lane id to pass in with the mutation
   addCard = () => {
     this.state.eventBus.publish({
       type: "ADD_CARD",
-      laneId: "WISHLIST",
+
       card: {
-        id: "Example4",
-        jobTitle: "Senior Developer",
-        companyName: "Tech Inc",
-        salary: 120000,
-        location: "Dallas, TX",
-        date_submitted: "10/06/2021",
-        user_id: 1,
+        id: "Card1",
+        title: "Engineer",
+        laneId: "WISHLIST",
       },
     });
+  };
+
+  //this is where we query the DB , get the jobs and create actual cards
+  onDataChange = () => {
+    console.log();
   };
 
   shouldReceiveNewData = (nextData) => {
@@ -105,6 +119,7 @@ class App extends Component {
             Add Blocked
           </button> */}
           <React.Fragment>
+            {/* should load array of applications uploaded - need to push to array if added a new app */}
             <Board
               editable
               onCardAdd={this.handleCardAdd}

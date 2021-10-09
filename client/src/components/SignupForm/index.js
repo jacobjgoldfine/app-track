@@ -100,6 +100,8 @@ const SignupForm =() => {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={handleChange}
+
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -147,7 +149,7 @@ const SignupForm =() => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href= "/login" variant="body2">
+                <Link href= "/" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
