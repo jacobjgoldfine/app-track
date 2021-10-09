@@ -63,7 +63,6 @@ class App extends Component {
 
   setEventBus = (eventBus) => {
     this.setState({ eventBus });
-    console.log(eventBus);
   };
 
   async componentWillMount() {
@@ -78,21 +77,28 @@ class App extends Component {
   }
 
   // default lane id to pass in with the mutation
-  addCard = () => {
-    this.state.eventBus.publish({
-      type: "ADD_CARD",
+  // addCard = (card) => {
+  //   this.state.eventBus.publish({
+  //     type: "ADD_CARD",
 
-      card: {
-        id: "Card1",
-        title: "Engineer",
-        laneId: "WISHLIST",
-      },
-    });
-  };
+  //     card: {
+  //       id: {},
+  //       title: {req.body.title},
+  //       laneId: "WISHLIST",
+  //     },
+  //   });
+  // };
 
   //this is where we query the DB , get the jobs and create actual cards
-  onDataChange = () => {
-    console.log();
+
+  onDataChange = (newData) => {
+    let counter = 0;
+    const newCard = {
+      laneId: `{newData.laneId}`,
+      title: `{newData.title}`,
+    };
+    newCard.id = ++counter;
+    cards.push(newCard);
   };
 
   shouldReceiveNewData = (nextData) => {
@@ -121,7 +127,7 @@ class App extends Component {
           <React.Fragment>
             {/* should load array of applications uploaded - need to push to array if added a new app */}
             <Board
-              editable
+              // editable
               onCardAdd={this.handleCardAdd}
               data={this.state.boardData}
               draggable={false}
