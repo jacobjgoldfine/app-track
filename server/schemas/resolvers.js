@@ -1,34 +1,35 @@
 const { Application, User } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
+const ParseURLScrape = require("../utils/scrapAPI");
 
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('user');
+      return User.find().populate("user");
     },
     applications: async (parent, { email }) => {
       const params = email ? { email } : {};
-      return Application.find(params).sort ({date_submitted: -1})
+      return Application.find(params).sort({ date_submitted: -1 });
     },
 
     application: async (parent, { applicationId }) => {
       return Application.findOne({ _id: applicationId });
     },
-    
+
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('applications');
+        return User.findOne({ _id: context.user._id }).populate("applications");
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
 
   Mutation: {
     addUser: async (parent, { firstName, lastName, email, password }) => {
-      const user = await User.create({ firstName, lastName, email, password })
+      const user = await User.create({ firstName, lastName, email, password });
       const token = signToken(user);
-      return {token, user};
+      return { token, user };
     },
 
     login: async (parent, { email, password }) => {
@@ -51,20 +52,31 @@ const resolvers = {
     addApplication: async (parent, { jobTitle, companyName, salary, location }, context) => {
       if (context.user) {
         const application = await Application.create({
-          jobTitle, 
-          companyName, 
-          salary, 
-          location
+          jobTitle,
+          companyName,
+          salary,
+          location,
         });
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { applications: application._id } }
-        );
+        await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { applications: application._id } });
 
         return application;
       }
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
+    },
+
+    ADD_APPLICATION_WITH_URL: async (parent, { URL }, context) => {
+      const data = await ParseURLScrape(URL);
+      // if (context.user) {
+      const application = await Application.create({
+        data,
+      });
+
+      await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { application: application._id } });
+
+      return application;
+      // }
+      // throw new AuthenticationError("Be logged in.");
     },
   },
 };
