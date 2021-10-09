@@ -65,18 +65,18 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    addApplicationWithURL: async (parent, { URL }, context) => {
+    ADD_APPLICATION_WITH_URL: async (parent, { URL }, context) => {
       const data = await ParseURLScrape(URL);
-      if (context.user) {
-        const application = await Application.create({
-          data,
-        });
+      // if (context.user) {
+      const application = await Application.create({
+        data,
+      });
 
-        await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { application: application._id } });
+      await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { application: application._id } });
 
-        return application;
-      }
-      throw new AuthenticationError("Please include a URL");
+      return application;
+      // }
+      // throw new AuthenticationError("Be logged in.");
     },
   },
 };
