@@ -130,7 +130,8 @@ const Login =() => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+              <Link to= "/profile">  Sign In </Link>
+              
               </Button>
               <Grid container>
                 <Grid item>
