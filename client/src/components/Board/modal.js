@@ -1,9 +1,12 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
+import { useState } from "react";
+import React from "react";
+import { useMutation } from "@apollo/client";
+import { ADD_APPLICATION } from "../../utils/mutations";
 
 const style = {
   position: "absolute",
@@ -19,9 +22,40 @@ const style = {
 };
 
 export default function BasicModal() {
+  //handles modals open and close
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  //useMutation to add form elements to DB
+  const [addApplication, { error }] = useMutation(ADD_APPLICATION);
+
+  //will console log any errors
+  if (error) {
+    console.log("error:", error);
+  }
+
+  //takes form info from the input fields and sets up a state for them
+  const [formData, setFormData] = useState({
+    jobTitle: "",
+    companyName: "",
+    salary: "",
+    location: "",
+  });
+
+  // need to add mutation
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addApplication({
+      variables: {
+        jobTitle: formData.jobTitle,
+        companyName: formData.companyName,
+        salary: formData.salary,
+        location: formData.location,
+      },
+    });
+    console.log(formData);
+  };
 
   return (
     <div>
@@ -45,14 +79,22 @@ export default function BasicModal() {
             </div>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form id="form-input" noValidate autoComplete="off">
+            <form
+              id="form-input"
+              noValidate
+              autoComplete="off"
+              onSubmit={handleSubmit}
+            >
               <TextField
                 fullWidth
                 id="jobTitle"
                 label="Job Title"
                 type="text"
                 name="Job Title"
-                // autoComplete="email"
+                onChange={(e) =>
+                  setFormData({ ...formData, jobTitle: e.target.value })
+                }
+                value={formData.jobTitle}
                 margin="normal"
                 variant="outlined"
                 required
@@ -60,42 +102,44 @@ export default function BasicModal() {
               />
               <TextField
                 fullWidth
-                id="outlined"
+                id="companyName"
                 label="Company Name"
                 type="text"
-                // autoComplete="current-password"
+                onChange={(e) =>
+                  setFormData({ ...formData, companyName: e.target.value })
+                }
+                value={formData.companyName}
                 margin="normal"
                 variant="outlined"
                 required
               />
               <TextField
                 fullWidth
-                id="outlined"
+                id="salary"
                 label="Salary"
                 type="text"
-                // autoComplete="current-password"
+                onChange={(e) =>
+                  setFormData({ ...formData, salary: e.target.value })
+                }
+                value={formData.salary}
                 margin="normal"
                 variant="outlined"
               />
               <TextField
                 fullWidth
-                id="outlined"
+                id="location"
                 label="location"
                 type="text"
-                // autoComplete="current-password"
+                onChange={(e) =>
+                  setFormData({ ...formData, location: e.target.value })
+                }
+                value={formData.location}
                 margin="normal"
                 variant="outlined"
               />
             </form>
           </Typography>
-          <Button
-            onClick={() => {
-              alert("Application submitted");
-              //insert mutation for submission here
-            }}
-          >
-            Submit
-          </Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </Box>
       </Modal>
     </div>

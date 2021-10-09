@@ -11,11 +11,11 @@ const applicationSchema = new Schema({
     required: true,
   },
   // questionable?  Do we want to enter manual date or have it autopopulate?
-  date_submitted: {
-    type: Date,
-    default: Date.now,
-    get: (timestamp) => dateFormat(timestamp),
-  },
+  // date_submitted: {
+  //   type: Date,
+  //   default: Date.now,
+  //   get: (timestamp) => dateFormat(timestamp),
+  // },
   salary: {
     type: Number,
   },
