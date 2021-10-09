@@ -100,6 +100,8 @@ const SignupForm =() => {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={handleChange}
+
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
