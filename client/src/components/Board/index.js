@@ -90,17 +90,6 @@ class App extends Component {
   // };
 
   //this is where we query the DB , get the jobs and create actual cards
-
-  onDataChange = (newData) => {
-    let counter = 0;
-    const newCard = {
-      laneId: `{newData.laneId}`,
-      title: `{newData.title}`,
-    };
-    newCard.id = ++counter;
-    cards.push(newCard);
-  };
-
   shouldReceiveNewData = (nextData) => {
     // console.log("New card has been added");
     // console.log(nextData);
