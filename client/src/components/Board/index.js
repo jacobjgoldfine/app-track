@@ -59,7 +59,7 @@ const handleDragEnd = (
 console.log(BoardContainer.id);
 
 class App extends Component {
-  state = { boardData: { lanes: [] } };
+  state = { boardData: data };
 
   setEventBus = (eventBus) => {
     this.setState({ eventBus });
@@ -72,28 +72,51 @@ class App extends Component {
 
   getBoard() {
     return new Promise((resolve) => {
-      resolve(data);
+      resolve(this.state.boardData);
     });
   }
 
   // default lane id to pass in with the mutation
-  // addCard = (card) => {
-  //   this.state.eventBus.publish({
-  //     type: "ADD_CARD",
+  addCard = () => {
+    const boardData = [...this.state.boardData];
+    boardData.lanes[0].cards.push();
 
-  //     card: {
-  //       id: {},
-  //       title: {req.body.title},
-  //       laneId: "WISHLIST",
-  //     },
-  //   });
-  // };
+    // this.state.eventBus.publish({
+    //   type: "ADD_CARD",
 
-  //this is where we query the DB , get the jobs and create actual cards
-  shouldReceiveNewData = (nextData) => {
-    // console.log("New card has been added");
-    // console.log(nextData);
+    //   card: {
+    //     id: "Card1",
+    //     title: "Engineer",
+    //     laneId: "WISHLIST",
+    //   },
+    // });
+    this.setState({ boardData });
   };
+
+  // //this is where we query the DB , get the jobs and create actual cards
+  newData = () => {
+    const boardData = [...this.state.boardData];
+    boardData.lanes[0].cards
+      .push
+      /// whatever in here
+      ();
+    // const allCards = cards.(data =>  {
+    //   type: "UPDATE_CARD",
+    //   laneId: `${cards.laneId}`,
+    //   card: {
+    //     id: `${cards.id}`,
+    //     title: `${cards.title}`,
+    //   },
+    // });
+    // this.state.eventBus.publish(allCards);
+
+    this.setState({ boardData });
+  };
+
+  // shouldReceiveNewData = (nextData) => {
+  //   // console.log("New card has been added");
+  //   // console.log(nextData);
+  // };
 
   handleCardAdd = (card, laneId) => {
     // console.log(`New card added to lane ${laneId}`);
@@ -120,7 +143,7 @@ class App extends Component {
               onCardAdd={this.handleCardAdd}
               data={this.state.boardData}
               draggable={false}
-              onDataChange={this.shouldReceiveNewData}
+              onDataChange={this.newData}
               eventBusHandle={this.setEventBus}
               handleDragStart={handleDragStart}
               handleDragEnd={handleDragEnd}
