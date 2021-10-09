@@ -6,18 +6,34 @@ export const LOGIN_USER = gql`
       token
       user {
         _id
-        username
+        email
       }
     }
   }
 `;
 
-export const ADD_PROFILE = gql`
-  mutation addProfile($name: String!) {
-    addProfile(name: $name) {
+export const ADD_USER = gql`
+  mutation  addUser($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+    addUser(firstName: $firstName, lastName: $lastname, email: $email, password: $password) {
+      token
+      user {
+        _id
+        email
+      }
+    }
+  }
+`;
+
+//This will be imported on either the job board area, or maybe the modal form
+export const ADD_APPLICATION = gql`
+  mutation addApplication($jobTitle: String!, $companyName: String!, $salary: String, $location: String) {
+    addThought(jobTitle: $jobTitle, companyName: $companyName, salary: $salary, location: $location) {
       _id
-      name
-      skills
+      jobTitle
+      companyName
+      date_submitted
+      salary
+      location
     }
   }
 `;

@@ -25,13 +25,15 @@ const typeDefs = gql`
   }
 
   type Query {
-    getAllApplications: Application
-    getUser(email: String!): User
+    users: [User]
+    application(applicationId: ID!): Application
+    applications(email: String): [Application]
+    me: User
   }
 
   type Mutation {
-    login(email: String!, password: String!): User
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): User
+    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
     addApplication(jobTitle: String!, companyName: String!, salary: String, location: String): Application
   }
 `;
