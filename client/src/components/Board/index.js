@@ -1,159 +1,175 @@
-import React, { Component } from "react";
-import Board, { BoardContainer } from "react-trello";
-import BasicModal from "./modal";
-import Card from "react-trello";
-import { DragHandleRounded } from "@mui/icons-material";
+import React, { useState } from "react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { v4 as uuidv4 } from "uuid";
 
-const cards = require("./data.json");
+//cards that will render onto the lanes/columns (examples) - need to create mutation and pull from database
+const cardInfo = [
+  { id: uuidv4(), jobTitle: "Full Stack Web Developer" },
+  { id: uuidv4(), jobTitle: "Senior Developer" },
+];
 
-const data = {
-  lanes: [
-    {
-      id: "APPLIED",
-      title: "Submitted Applications",
-      style: { width: 350 },
-      cards: [],
-    },
-    {
-      id: "WISHLIST",
-      title: "Job Wishlist",
-      style: { width: 350 },
-      cards: [],
-    },
-    {
-      id: "REJECTED",
-      title: "Rejected offers",
-      style: { width: 350 },
-      cards: [],
-    },
-  ],
+//columns/lanes that the cards will populate onto
+const columnLanes = {
+  //uuid populates a random specific id for the group id - this will apply to the lane the card will be inside of
+  [uuidv4()]: {
+    lane: "Applied",
+    cards: cardInfo,
+  },
+  [uuidv4()]: {
+    lane: "Wishlist",
+    cards: [],
+  },
+  [uuidv4()]: {
+    lane: "Rejected",
+    cards: [],
+  },
+  [uuidv4()]: {
+    lane: "Follow-up",
+    cards: [],
+  },
 };
 
-const handleDragStart = (cardId, laneId) => {
-  console.log("drag started");
-  console.log(`cardId: ${cardId}`);
-  console.log(`laneId: ${laneId}`);
-};
+//if there is no other column/destination then the card will just bounce back
+const onDragEnd = (result, columns, setColumns) => {
+  if (!result.destination) return;
 
-// mutation send back the targetLaneId as LaneId
-const handleDragEnd = (
-  cardId,
-  sourceLaneId,
-  targetLaneId,
-  cardDetails,
-  position
-) => {
-  // console.log("drag ended");
-  // console.log(`cardId: ${cardId}`);
-  // console.log(`sourceLaneId: ${sourceLaneId}`);
-  // console.log(`targetLaneId: ${targetLaneId}`);
-  // console.log(`cardDetails : ${cardDetails}`);
-  // console.log("postion", position);
-};
+  const { source, destination } = result;
+  //this removes the cards from the original array and replaces it into the new array
+  if (source.droppableId !== destination.droppableId) {
+    //getting the source and destination columns
+    const sourceColumn = columns[source.droppableId];
+    const destColumn = columns[destination.droppableId];
 
-//need to create modal to pop when clicked
-// const onCardClick = (cardId, metadata) => {
+    //making a copy of the cards within those columns in order to manipulate the arrays
+    const sourceCards = [...sourceColumn.cards];
+    const destCards = [...destColumn.cards];
 
-// };
+    //we are removing the source items to implement it back later
+    const [removed] = sourceCards.splice(source.index, 1);
+    destCards.splice(destination.index, 0, removed);
 
-console.log(BoardContainer.id);
+    //now setting the cards into the new columns
+    setColumns({
+      ...columns,
+      [source.droppableId]: {
+        ...sourceColumn,
+        cards: sourceCards,
+      },
+      [destination.droppableId]: {
+        ...destColumn,
+        cards: destCards,
+      },
+    });
+  } else {
+    //have our columns/lanes and will get by the id
+    const column = columns[source.droppableId];
 
-class App extends Component {
-  state = { boardData: data };
+    //copying cards so that we are not manipulating our original state
+    const copiedCards = [...column.cards];
 
-  setEventBus = (eventBus) => {
-    this.setState({ eventBus });
-    console.log(eventBus);
-  };
-
-  async componentWillMount() {
-    const response = await this.getBoard();
-    this.setState({ boardData: response });
-  }
-
-  getBoard() {
-    return new Promise((resolve) => {
-      resolve(this.state.boardData);
+    //need to slice out the card from the array
+    const [removed] = copiedCards.splice(source.index, 1);
+    copiedCards.splice(destination.index, 0, removed);
+    //will allow to set cards in new columns
+    setColumns({
+      ...columns,
+      [source.droppableId]: {
+        ...column,
+        cards: copiedCards,
+      },
     });
   }
+};
 
-  // default lane id to pass in with the mutation
-  addCard = () => {
-    const boardData = [...this.state.boardData];
-    boardData.lanes[0].cards.push();
+function RenderBoard() {
+  //sets state for columns to render the columns
+  const [columns, setColumns] = useState(columnLanes);
 
-    // this.state.eventBus.publish({
-    //   type: "ADD_CARD",
-
-    //   card: {
-    //     id: "Card1",
-    //     title: "Engineer",
-    //     laneId: "WISHLIST",
-    //   },
-    // });
-    this.setState({ boardData });
-  };
-
-  // //this is where we query the DB , get the jobs and create actual cards
-  // newData = () => {
-  //   const boardData = [...this.state.boardData];
-  //   boardData.lanes[0].cards
-  //     .push
-  //     /// whatever in here
-  //     ();
-  //   // const allCards = cards.(data =>  {
-  //   //   type: "UPDATE_CARD",
-  //   //   laneId: `${cards.laneId}`,
-  //   //   card: {
-  //   //     id: `${cards.id}`,
-  //   //     title: `${cards.title}`,
-  //   //   },
-  //   // });
-  //   // this.state.eventBus.publish(allCards);
-
-  //   this.setState({ boardData });
-  // };
-
-  // shouldReceiveNewData = (nextData) => {
-  //   // console.log("New card has been added");
-  //   // console.log(nextData);
-  // };
-
-  handleCardAdd = (card, laneId) => {
-    // console.log(`New card added to lane ${laneId}`);
-    // console.dir(card);
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <h3>Kaban Board</h3>
-        </div>
-        <div className="App-intro">
-          {/* <button onClick={this.completeCard} style={{ margin: 5 }}>
-            Complete Buy Milk
-          </button>
-          <button onClick={this.addCard} style={{ margin: 5 }}>
-            Add Blocked
-          </button> */}
-          <React.Fragment>
-            {/* should load array of applications uploaded - need to push to array if added a new app */}
-            <Board
-              // editable
-              onCardAdd={this.handleCardAdd}
-              data={this.state.boardData}
-              draggable={false}
-              onDataChange={this.newData}
-              eventBusHandle={this.setEventBus}
-              handleDragStart={handleDragStart}
-              handleDragEnd={handleDragEnd}
-            />
-          </React.Fragment>
-        </div>
-      </div>
-    );
-  }
+  return (
+    <div style={{ display: "flex", justifyContent: "center", height: "100%" }}>
+      {/* at minimum needs 'onDragEnd' = dragdropcontext will reorder the items - if drag into a new column, will delete from the old column */}
+      <DragDropContext
+        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+      >
+        {/* each droppable needs to have its own key on it and needs to be unique */}
+        {Object.entries(columns).map(([id, column]) => {
+          return (
+            // takes in the children (cards)
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <h2>{column.lane}</h2>
+              {/* styling the margin between each column */}
+              <div style={{ margin: 8 }}>
+                <Droppable droppableId={id} key={id}>
+                  {/* function that returns props - snapshot = the current thing that you have */}
+                  {(provided, snapshot) => {
+                    return (
+                      <div
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                        style={{
+                          // if something is dragging over it then will be this color
+                          background: snapshot.isDraggingOver
+                            ? "lightblue"
+                            : "lightgrey",
+                          padding: 4,
+                          width: 300,
+                          minHeight: 550,
+                        }}
+                      >
+                        {/* will map over items within the columns */}
+                        {column.cards.map((item, index) => {
+                          return (
+                            // draggableId must be a string.  Index will return to us what index we are dragging from and dropping to
+                            <Draggable
+                              key={item.id}
+                              draggableId={item.id}
+                              index={index}
+                            >
+                              {(provided, snapshot) => {
+                                return (
+                                  <div
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    // dragHandleProps picks up the item
+                                    {...provided.dragHandleProps}
+                                    style={{
+                                      userSelect: "none",
+                                      padding: 16,
+                                      margin: "0 0 8px 0",
+                                      minHeight: "50px",
+                                      // if dragging will change the color
+                                      backgroundColor: snapshot.isDragging
+                                        ? "#263B4A"
+                                        : "#456C86",
+                                      color: "white",
+                                      ...provided.draggableProps.style,
+                                    }}
+                                  >
+                                    {item.jobTitle}
+                                  </div>
+                                );
+                              }}
+                            </Draggable>
+                          );
+                        })}
+                        {provided.placeholder}
+                      </div>
+                    );
+                  }}
+                </Droppable>
+              </div>
+            </div>
+          );
+        })}
+      </DragDropContext>
+    </div>
+  );
 }
 
-export default App;
+export default RenderBoard;

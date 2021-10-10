@@ -24,6 +24,7 @@
     "@mui/styled-engine-sc": "^5.0.0",
     "install": "^0.13.0",
     "npm": "^7.24.2",
+    "react-beautiful-dnd": "^13.1.0",
     "styled-components": "^5.3.1"
   }
 }
