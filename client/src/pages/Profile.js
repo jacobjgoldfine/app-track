@@ -9,6 +9,7 @@ import Link from "@mui/material/Link";
 // import Box from "@mui/material/Box";
 // import Grid from "@mui/material/Grid";
 import Modal from "../components/Board/modal";
+import RenderBoard from "../components/Board/index";
 
 const Profile = () => {
   return (
@@ -19,7 +20,6 @@ const Profile = () => {
           <button id="homeBtn">Home</button>
         </Link>
       </div>
-
       <div className="flex-row justify-center">
         <App />
       </div>
