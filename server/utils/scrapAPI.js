@@ -14,7 +14,7 @@ const ParseURLScrape = async (URL) => {
     // type: root.querySelector(".jobsearch-JobMetadataHeader-item")?.lastChild?.rawText,
     // fullDescription: root.querySelector("#jobDescriptionText")?.rawText,
   };
-  console.log(parsedData);
+  // console.log(parsedData);
   return parsedData;
 };
 
