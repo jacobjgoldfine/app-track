@@ -49,20 +49,28 @@ const resolvers = {
       return { token, user };
     },
 
-    addApplication: async (parent, { jobTitle, companyName, salary, location }, context) => {
-      if (context.user) {
-        const application = await Application.create({
-          jobTitle,
-          companyName,
-          salary,
-          location,
-        });
+    addApplication: async (
+      parent,
+      { jobTitle, companyName, salary, location },
+      context
+    ) => {
+      // if (context.user) {
+      const application = await Application.create({
+        jobTitle,
+        companyName,
+        salary,
+        location,
+      });
 
-        await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { applications: application._id } });
+      await User.findOneAndUpdate(
+        // { _id: context.user._id },
+        { $addToSet: { applications: application._id } }
+      );
+      console.log("This works!");
+      return application;
 
-        return application;
-      }
-      throw new AuthenticationError("You need to be logged in!");
+      // }
+      // throw new AuthenticationError("You need to be logged in!");
     },
 
     ADD_APPLICATION_WITH_URL: async (parent, { URL }, context) => {
@@ -72,7 +80,10 @@ const resolvers = {
         data,
       });
 
-      await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { application: application._id } });
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $addToSet: { application: application._id } }
+      );
 
       return application;
       // }

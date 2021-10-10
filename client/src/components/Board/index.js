@@ -94,24 +94,24 @@ class App extends Component {
   };
 
   // //this is where we query the DB , get the jobs and create actual cards
-  newData = () => {
-    const boardData = [...this.state.boardData];
-    boardData.lanes[0].cards
-      .push
-      /// whatever in here
-      ();
-    // const allCards = cards.(data =>  {
-    //   type: "UPDATE_CARD",
-    //   laneId: `${cards.laneId}`,
-    //   card: {
-    //     id: `${cards.id}`,
-    //     title: `${cards.title}`,
-    //   },
-    // });
-    // this.state.eventBus.publish(allCards);
+  // newData = () => {
+  //   const boardData = [...this.state.boardData];
+  //   boardData.lanes[0].cards
+  //     .push
+  //     /// whatever in here
+  //     ();
+  //   // const allCards = cards.(data =>  {
+  //   //   type: "UPDATE_CARD",
+  //   //   laneId: `${cards.laneId}`,
+  //   //   card: {
+  //   //     id: `${cards.id}`,
+  //   //     title: `${cards.title}`,
+  //   //   },
+  //   // });
+  //   // this.state.eventBus.publish(allCards);
 
-    this.setState({ boardData });
-  };
+  //   this.setState({ boardData });
+  // };
 
   // shouldReceiveNewData = (nextData) => {
   //   // console.log("New card has been added");
