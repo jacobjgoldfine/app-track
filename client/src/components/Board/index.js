@@ -4,6 +4,8 @@ import BasicModal from "./modal";
 import Card from "react-trello";
 import { DragHandleRounded } from "@mui/icons-material";
 
+import applicationInfo from "./applicatoinQuery";
+
 const cards = require("./data.json");
 
 const data = {
@@ -56,8 +58,6 @@ const handleDragEnd = (
 
 // };
 
-console.log(BoardContainer.id);
-
 class App extends Component {
   state = { boardData: data };
 
@@ -77,20 +77,12 @@ class App extends Component {
     });
   }
 
+  // const {data}  = useQuery(QUERY_ALL_APPLICATIONS);
   // default lane id to pass in with the mutation
   addCard = () => {
     const boardData = [...this.state.boardData];
-    boardData.lanes[0].cards.push();
+    boardData.lanes[0].cards.push(applicationInfo);
 
-    // this.state.eventBus.publish({
-    //   type: "ADD_CARD",
-
-    //   card: {
-    //     id: "Card1",
-    //     title: "Engineer",
-    //     laneId: "WISHLIST",
-    //   },
-    // });
     this.setState({ boardData });
   };
 
@@ -101,15 +93,6 @@ class App extends Component {
   //     .push
   //     /// whatever in here
   //     ();
-  //   // const allCards = cards.(data =>  {
-  //   //   type: "UPDATE_CARD",
-  //   //   laneId: `${cards.laneId}`,
-  //   //   card: {
-  //   //     id: `${cards.id}`,
-  //   //     title: `${cards.title}`,
-  //   //   },
-  //   // });
-  //   // this.state.eventBus.publish(allCards);
 
   //   this.setState({ boardData });
   // };
@@ -119,10 +102,10 @@ class App extends Component {
   //   // console.log(nextData);
   // };
 
-  handleCardAdd = (card, laneId) => {
-    // console.log(`New card added to lane ${laneId}`);
-    // console.dir(card);
-  };
+  // handleCardAdd = (card, laneId) => {
+  //   // console.log(`New card added to lane ${laneId}`);
+  //   // console.dir(card)
+  // };
 
   render() {
     return (
@@ -131,17 +114,10 @@ class App extends Component {
           <h3>Kaban Board</h3>
         </div>
         <div className="App-intro">
-          {/* <button onClick={this.completeCard} style={{ margin: 5 }}>
-            Complete Buy Milk
-          </button>
-          <button onClick={this.addCard} style={{ margin: 5 }}>
-            Add Blocked
-          </button> */}
           <React.Fragment>
             {/* should load array of applications uploaded - need to push to array if added a new app */}
             <Board
-              // editable
-              onCardAdd={this.handleCardAdd}
+              // onCardAdd={this.handleCardAdd}
               data={this.state.boardData}
               draggable={false}
               onDataChange={this.newData}
