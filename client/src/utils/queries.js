@@ -1,16 +1,16 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 //will go on the job board area
-const QUERY_ALL_APPLICATIONS =gql`
-  query applications{
-    applications{
+export const QUERY_ALL_APPLICATIONS = gql`
+  query applications {
+    applications {
       _id
     }
   }
 `;
 
 // this will also go on the job board, not sure if we want to incldue filters for the board so you can sort ?
-const QUERY_SINGLE_APPLICATION =gql`
+export const QUERY_SINGLE_APPLICATION = gql`
   query application (applicationId: ID!) {
     application(applicationId: $applicationId){
       _id
@@ -33,12 +33,12 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_USERS = gql`
-  query users{
-    User{
+  query users {
+    User {
       _id
       firstName
       lastName
       email
     }
   }
-  `;
+`;
