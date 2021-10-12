@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { QUERY_ALL_APPLICATIONS } from "../../utils/queries";
@@ -9,7 +9,7 @@ import { QUERY_ALL_APPLICATIONS } from "../../utils/queries";
 //create new const array for each lane that gets fed into the columnLane
 
 //cards that will render onto the lanes/columns (examples) - need to create mutation and pull from database
-// const cardInfo = [
+// const cardApplied = [
 //   { id: uuidv4(), jobTitle: "Full Stack Web Developer" },
 //   { id: uuidv4(), jobTitle: "Senior Developer" },
 // ];
@@ -17,6 +17,7 @@ const cardApplied = [];
 const cardWish = [];
 const cardReject = [];
 const cardFollow = [];
+// console.log(cardApplied);
 //columns/lanes that the cards will populate onto
 const columnLanes = {
   //uuid populates a random specific id for the group id - this will apply to the lane the card will be inside of
@@ -69,24 +70,24 @@ const onDragEnd = (result, columns, setColumns) => {
         cards: destCards,
       },
     });
-  } else {
-    //have our columns/lanes and will get by the id
-    const column = columns[source.droppableId];
+    // } else {
+    //   //have our columns/lanes and will get by the id
+    //   const column = columns[source.droppableId];
 
-    //copying cards so that we are not manipulating our original state
-    const copiedCards = [...column.cards];
+    //   //copying cards so that we are not manipulating our original state
+    //   const copiedCards = [...column.cards];
 
-    //need to slice out the card from the array
-    const [removed] = copiedCards.splice(source.index, 1);
-    copiedCards.splice(destination.index, 0, removed);
-    //will allow to set cards in new columns
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        cards: copiedCards,
-      },
-    });
+    //   //need to slice out the card from the array
+    //   const [removed] = copiedCards.splice(source.index, 1);
+    //   copiedCards.splice(destination.index, 0, removed);
+    //   //will allow to set cards in new columns
+    //   setColumns({
+    //     ...columns,
+    //     [source.droppableId]: {
+    //       ...column,
+    //       cards: copiedCards,
+    //     },
+    //   });
   }
 };
 
@@ -94,33 +95,36 @@ function RenderBoard() {
   //sets state for columns to render the columns
   const [columns, setColumns] = useState(columnLanes);
 
-  const cardData = useQuery(QUERY_ALL_APPLICATIONS);
-  const cardAps = cardData.data.applications;
-  // console.log(cardData);
-  // console.log(cardData[0].lane);
+  const { loading, data } = useQuery(QUERY_ALL_APPLICATIONS);
+  console.log(loading);
+  console.log(data);
+  const cardAps = data?.applications || [];
 
   const cardLanes = cardAps.map(function (element) {
     switch (element.lane) {
       case "Applied":
-        const cardID = uuidv4();
-        return cardApplied.push({ id: cardID, jobTitle: element.jobTitle });
+        const cardIDA = uuidv4();
+        return cardApplied.push({ id: cardIDA, jobTitle: element.jobTitle });
 
       case "Wishlist":
-        return;
+        const cardIDW = uuidv4();
+        return cardWish.push({ id: cardIDW, jobTitle: element.jobTitle });
 
       case "Rejected":
-        return;
+        const cardIDR = uuidv4();
+        return cardReject.push({ id: cardIDR, jobTitle: element.jobTitle });
 
       case "Follow-Up":
-        return;
+        const cardIDF = uuidv4();
+        return cardFollow.push({ id: cardIDF, jobTitle: element.jobTitle });
 
       default:
         break;
     }
-    return;
+    return cardLanes;
   });
 
-  console.log(cardApplied);
+  console.log(cardLanes);
 
   return (
     <div style={{ display: "flex", justifyContent: "center", height: "100%" }}>

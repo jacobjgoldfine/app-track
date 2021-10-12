@@ -26,10 +26,6 @@ const applicationSchema = new Schema({
     type: String,
     default: "Applied",
   },
-  id: {
-    type: String,
-    default: "uuidv4()",
-  },
   user_id: [
     {
       type: Schema.Types.ObjectId,

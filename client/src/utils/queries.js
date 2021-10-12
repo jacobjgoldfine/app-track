@@ -5,7 +5,6 @@ export const QUERY_ALL_APPLICATIONS = gql`
   query applications {
     applications {
       _id
-      id
       jobTitle
       lane
     }
