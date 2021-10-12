@@ -8,10 +8,15 @@ const resolvers = {
     users: async () => {
       return User.find().populate("user");
     },
-    applications: async (parent, { email }) => {
-      const params = email ? { email } : {};
-      return Application.find(params).sort({ date_submitted: -1 });
-    },
+
+    // commented out email requirements/user requirments to test
+    applications: async () =>
+      // parent, { email }
+      {
+        // const params = email ? { email } : {};
+        return Application.find().populate("applications");
+        // return Application.find(params).sort({ date_submitted: -1 });
+      },
 
     application: async (parent, { applicationId }) => {
       return Application.findOne({ _id: applicationId });
@@ -81,6 +86,7 @@ const resolvers = {
         jobTitle,
         companyName,
         location,
+        salary,
       });
 
       // await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { application: application._id } });

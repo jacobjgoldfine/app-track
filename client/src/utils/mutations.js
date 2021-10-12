@@ -44,7 +44,8 @@ export const ADD_APPLICATION_WITH_URL = gql`
       _id
       jobTitle
       companyName
-      companyName
+      salary
+      location
     }
   }
 `;

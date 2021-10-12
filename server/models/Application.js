@@ -17,10 +17,18 @@ const applicationSchema = new Schema({
   //   get: (timestamp) => dateFormat(timestamp),
   // },
   salary: {
-    type: Number,
+    type: String,
   },
   location: {
     type: String,
+  },
+  lane: {
+    type: String,
+    default: "Applied",
+  },
+  id: {
+    type: String,
+    default: "uuidv4()",
   },
   user_id: [
     {

@@ -5,14 +5,17 @@ export const QUERY_ALL_APPLICATIONS = gql`
   query applications {
     applications {
       _id
+      id
+      jobTitle
+      lane
     }
   }
 `;
 
 // this will also go on the job board, not sure if we want to incldue filters for the board so you can sort ?
 export const QUERY_SINGLE_APPLICATION = gql`
-  query application (applicationId: ID!) {
-    application(applicationId: $applicationId){
+  query application($applicationId: ID!) {
+    application(applicationId: $applicationId) {
       _id
       jobTitle
       companyName
