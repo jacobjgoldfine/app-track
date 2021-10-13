@@ -106,27 +106,37 @@ function RenderBoard() {
   const cardLanes = cardAps.map(function (element) {
     switch (element.lane) {
       case "Applied":
-<<<<<<< HEAD
-        return cardApplied.push({
-          id: element._id,
-          jobTitle: element.jobTitle,
-        });
-=======
         const cardIDA = uuidv4();
-        return cardApplied.push({ id: cardIDA, jobTitle: element.jobTitle, appID: element._id });
->>>>>>> main
+        return cardApplied.push({
+          id: cardIDA,
+          jobTitle: element.jobTitle,
+          companyName: element.companyName,
+          appID: element._id,
+        });
 
       case "Wishlist":
         const cardIDW = uuidv4();
-        return cardWish.push({ id: cardIDW, jobTitle: element.jobTitle, appID: element._id });
+        return cardWish.push({
+          id: cardIDW,
+          jobTitle: element.jobTitle,
+          appID: element._id,
+        });
 
       case "Rejected":
         const cardIDR = uuidv4();
-        return cardReject.push({ id: cardIDR, jobTitle: element.jobTitle, appID: element._id });
+        return cardReject.push({
+          id: cardIDR,
+          jobTitle: element.jobTitle,
+          appID: element._id,
+        });
 
       case "Follow-Up":
         const cardIDF = uuidv4();
-        return cardFollow.push({ id: cardIDF, jobTitle: element.jobTitle, appID: element._id });
+        return cardFollow.push({
+          id: cardIDF,
+          jobTitle: element.jobTitle,
+          appID: element._id,
+        });
 
       default:
         break;
@@ -197,6 +207,7 @@ function RenderBoard() {
                         >
                           {/* will map over items within the columns */}
                           {column?.cards.map((item, index) => {
+                            console.log("This is the item", item);
                             return (
                               // draggableId must be a string.  Index will return to us what index we are dragging from and dropping to
                               <Draggable
@@ -227,8 +238,17 @@ function RenderBoard() {
                                       {item.jobTitle}
                                       <Button onClick={handleOpen}>
                                         Expand
-                                        <CardModal id={item._id} open={open} />
                                       </Button>
+
+                                      <CardModal
+                                        appID={item.appID}
+                                        open={open}
+                                        onClose={handleClose}
+                                        jobTitle={item.jobTitle}
+                                        companyName={item.companyName}
+                                        salary={item.salary}
+                                        location={item.location}
+                                      />
                                     </div>
                                   );
                                 }}
