@@ -24,15 +24,6 @@ export const QUERY_SINGLE_APPLICATION = gql`
   }
 `;
 
-export const QUERY_ME = gql`
-  query me {
-    me {
-      _id
-      email
-    }
-  }
-`;
-
 export const QUERY_USERS = gql`
   query users {
     User {
