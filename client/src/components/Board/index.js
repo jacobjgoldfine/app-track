@@ -10,24 +10,35 @@ import { QUERY_ALL_APPLICATIONS } from "../../utils/queries";
 import Button from "@mui/material/Button";
 import CardModal from "./CardModal";
 
+//cards that will render onto the lanes/columns (examples) - need to create mutation and pull from database
+// const cardApplied = [
+//   { id: uuidv4(), jobTitle: "Full Stack Web Developer" },
+//   { id: uuidv4(), jobTitle: "Senior Developer" },
+// ];
+const cardApplied = [];
+const cardWish = [];
+const cardReject = [];
+const cardFollow = [];
+
+// console.log(cardApplied);
 //columns/lanes that the cards will populate onto
 const columnLanes = {
   //uuid populates a random specific id for the group id - this will apply to the lane the card will be inside of
   applied1: {
     lane: "Applied",
-    cards: [],
+    cards: cardApplied,
   },
   wishlist1: {
     lane: "Wishlist",
-    cards: [],
+    cards: cardWish,
   },
   rejected1: {
     lane: "Rejected",
-    cards: [],
+    cards: cardReject,
   },
   followUp1: {
     lane: "Follow-up",
-    cards: [],
+    cards: cardFollow,
   },
 };
 
@@ -62,24 +73,24 @@ const onDragEnd = (result, columns, setColumns) => {
         cards: destCards,
       },
     });
-  } else {
-    //have our columns/lanes and will get by the id
-    const column = columns[source.droppableId];
+    // } else {
+    //   //have our columns/lanes and will get by the id
+    //   const column = columns[source.droppableId];
 
-    //copying cards so that we are not manipulating our original state
-    const copiedCards = [...column.cards];
+    //   //copying cards so that we are not manipulating our original state
+    //   const copiedCards = [...column.cards];
 
-    //need to slice out the card from the array
-    const [removed] = copiedCards.splice(source.index, 1);
-    copiedCards.splice(destination.index, 0, removed);
-    //will allow to set cards in new columns
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        cards: copiedCards,
-      },
-    });
+    //   //need to slice out the card from the array
+    //   const [removed] = copiedCards.splice(source.index, 1);
+    //   copiedCards.splice(destination.index, 0, removed);
+    //   //will allow to set cards in new columns
+    //   setColumns({
+    //     ...columns,
+    //     [source.droppableId]: {
+    //       ...column,
+    //       cards: copiedCards,
+    //     },
+    //   });
   }
 };
 
@@ -88,22 +99,43 @@ function RenderBoard() {
   const [columns, setColumns] = useState(columnLanes);
 
   const { loading, data } = useQuery(QUERY_ALL_APPLICATIONS);
+  console.log(loading);
   console.log(data);
+  const cardAps = data?.applications || [];
 
-  useEffect(() => {
-    let updatedColumns = {
-      ...columnLanes,
-      //have to find a way to set to applied id
-      applied1: { lane: "Applied", cards: data?.applications },
-    };
-    if (loading) {
-      console.log("loading");
-    } else {
-      setColumns(updatedColumns);
+  const cardLanes = cardAps.map(function (element) {
+    switch (element.lane) {
+      case "Applied":
+        return cardApplied.push({ id: element._id, jobTitle: element.jobTitle });
+
+      case "Wishlist":
+        return cardWish.push({ id: element._id, jobTitle: element.jobTitle });
+
+      case "Rejected":
+        return cardReject.push({ id: element._id, jobTitle: element.jobTitle });
+
+      case "Follow-Up":
+        return cardFollow.push({ id: element._id, jobTitle: element.jobTitle });
+
+      default:
+        break;
     }
+    return cardLanes;
+  });
+  // useEffect(() => {
+  //   let updatedColumns = {
+  //     ...columnLanes,
+  //     //have to find a way to set to applied id
+  //     applied1: { lane: "Applied", cards: data?.applications },
+  //   };
+  //   if (loading) {
+  //     console.log("loading");
+  //   } else {
+  //     setColumns(updatedColumns);
+  //   }
 
-    return () => {};
-  }, [data]);
+  //   return () => {};
+  // }, [data]);
 
   //opens modal - sets it to closed first and then should expand once click button
   const [open, setOpen] = React.useState(false);
@@ -116,9 +148,7 @@ function RenderBoard() {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <DragDropContext
-          onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
-        >
+        <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
           {/* each droppable needs to have its own key on it and needs to be unique */}
           {Object.entries(columns).map(([id, column]) => {
             return (
@@ -142,9 +172,7 @@ function RenderBoard() {
                           ref={provided.innerRef}
                           style={{
                             // if something is dragging over it then will be this color
-                            background: snapshot.isDraggingOver
-                              ? "lightblue"
-                              : "lightgrey",
+                            background: snapshot.isDraggingOver ? "lightblue" : "lightgrey",
                             padding: 4,
                             width: 300,
                             minHeight: 550,
@@ -154,11 +182,7 @@ function RenderBoard() {
                           {column?.cards.map((item, index) => {
                             return (
                               // draggableId must be a string.  Index will return to us what index we are dragging from and dropping to
-                              <Draggable
-                                key={item.id}
-                                draggableId={item.id}
-                                index={index}
-                              >
+                              <Draggable key={item.id} draggableId={item.id} index={index}>
                                 {(provided, snapshot) => {
                                   return (
                                     <div
@@ -172,9 +196,7 @@ function RenderBoard() {
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
                                         // if dragging will change the color
-                                        backgroundColor: snapshot.isDragging
-                                          ? "#263B4A"
-                                          : "#456C86",
+                                        backgroundColor: snapshot.isDragging ? "#263B4A" : "#456C86",
                                         color: "white",
                                         ...provided.draggableProps.style,
                                       }}

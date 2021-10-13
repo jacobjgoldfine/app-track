@@ -6,9 +6,7 @@ export const QUERY_ALL_APPLICATIONS = gql`
     applications {
       _id
       jobTitle
-      companyName
-      salary
-      location
+      lane
     }
   }
 `;
@@ -20,7 +18,6 @@ export const QUERY_SINGLE_APPLICATION = gql`
       _id
       jobTitle
       companyName
-      date_submitted
       salary
       location
     }
