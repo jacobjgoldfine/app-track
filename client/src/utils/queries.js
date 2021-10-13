@@ -6,6 +6,9 @@ export const QUERY_ALL_APPLICATIONS = gql`
     applications {
       _id
       jobTitle
+      companyName
+      salary
+      location
     }
   }
 `;
