@@ -8,10 +8,15 @@ const resolvers = {
     users: async () => {
       return User.find().populate("user");
     },
-    applications: async (parent, { email }) => {
-      const params = email ? { email } : {};
-      return Application.find(params).sort({ date_submitted: -1 });
-    },
+
+    // commented out email requirements/user requirments to test
+    applications: async () =>
+      // parent, { email }
+      {
+        // const params = email ? { email } : {};
+        return Application.find().populate("applications");
+        // return Application.find(params).sort({ date_submitted: -1 });
+      },
 
     application: async (parent, { applicationId }) => {
       console.log(applicationId);
@@ -50,11 +55,7 @@ const resolvers = {
       return { token, user };
     },
 
-    addApplication: async (
-      parent,
-      { jobTitle, companyName, salary, location },
-      context
-    ) => {
+    addApplication: async (parent, { jobTitle, companyName, salary, location }, context) => {
       // if (context.user) {
       const application = await Application.create({
         jobTitle,
@@ -76,19 +77,22 @@ const resolvers = {
 
     ADD_APPLICATION_WITH_URL: async (parent, { URL }, context) => {
       const data = await ParseURLScrape(URL);
-      // if (context.user) {
+      console.log(data);
+      const jobTitle = data.jobTitle;
+      const companyName = data.companyName;
+      const salary = data.salary;
+      const location = data.location;
+
       const application = await Application.create({
-        data,
+        jobTitle,
+        companyName,
+        location,
+        salary,
       });
 
-      await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $addToSet: { application: application._id } }
-      );
+      // await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { application: application._id } });
 
       return application;
-      // }
-      // throw new AuthenticationError("Be logged in.");
     },
   },
 };

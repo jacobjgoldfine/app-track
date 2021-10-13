@@ -6,6 +6,7 @@ export const QUERY_ALL_APPLICATIONS = gql`
     applications {
       _id
       jobTitle
+      lane
     }
   }
 `;

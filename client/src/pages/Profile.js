@@ -1,5 +1,5 @@
 import React from "react";
-import App from "../components/Board/index";
+import Board from "../components/Board/index";
 // import Avatar from "@mui/material/Avatar";
 // import Button from "@mui/material/Button";
 // import CssBaseline from "@mui/material/CssBaseline";
@@ -9,7 +9,6 @@ import Link from "@mui/material/Link";
 // import Box from "@mui/material/Box";
 // import Grid from "@mui/material/Grid";
 import Modal from "../components/Board/modal";
-import RenderBoard from "../components/Board/index";
 
 const Profile = () => {
   return (
@@ -21,7 +20,7 @@ const Profile = () => {
         </Link>
       </div>
       <div className="flex-row justify-center">
-        <App />
+        <Board />
       </div>
     </main>
   );
