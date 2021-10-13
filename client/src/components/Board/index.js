@@ -19,6 +19,7 @@ const cardApplied = [];
 const cardWish = [];
 const cardReject = [];
 const cardFollow = [];
+
 // console.log(cardApplied);
 //columns/lanes that the cards will populate onto
 const columnLanes = {
@@ -105,27 +106,22 @@ function RenderBoard() {
   const cardLanes = cardAps.map(function (element) {
     switch (element.lane) {
       case "Applied":
-        const cardIDA = uuidv4();
-        return cardApplied.push({ id: cardIDA, jobTitle: element.jobTitle });
+        return cardApplied.push({ id: element._id, jobTitle: element.jobTitle });
 
       case "Wishlist":
-        const cardIDW = uuidv4();
-        return cardWish.push({ id: cardIDW, jobTitle: element.jobTitle });
+        return cardWish.push({ id: element._id, jobTitle: element.jobTitle });
 
       case "Rejected":
-        const cardIDR = uuidv4();
-        return cardReject.push({ id: cardIDR, jobTitle: element.jobTitle });
+        return cardReject.push({ id: element._id, jobTitle: element.jobTitle });
 
       case "Follow-Up":
-        const cardIDF = uuidv4();
-        return cardFollow.push({ id: cardIDF, jobTitle: element.jobTitle });
+        return cardFollow.push({ id: element._id, jobTitle: element.jobTitle });
 
       default:
         break;
     }
     return cardLanes;
   });
-
   // useEffect(() => {
   //   let updatedColumns = {
   //     ...columnLanes,
