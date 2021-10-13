@@ -8,21 +8,16 @@ const resolvers = {
     users: async () => {
       return User.find().populate("user");
     },
-    applications: async (parent, { email }) => {
-      const params = email ? { email } : {};
-      return Application.find(params).sort({ _id: -1 });
+    applications: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate("applications");
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
 
     application: async (parent, { applicationId }) => {
       console.log(applicationId);
       return Application.findById(applicationId);
-    },
-
-    me: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("applications");
-      }
-      throw new AuthenticationError("You need to be logged in!");
     },
   },
 
@@ -51,7 +46,7 @@ const resolvers = {
     },
 
     addApplication: async (parent, { jobTitle, companyName, salary, location }, context) => {
-      // if (context.user) {
+       if (context.user) {
       const application = await Application.create({
         jobTitle,
         companyName,
@@ -60,14 +55,14 @@ const resolvers = {
       });
 
       await User.findOneAndUpdate(
-        // { _id: context.user._id },
+        { _id: context.user._id },
         { $addToSet: { applications: application._id } }
       );
       console.log("This works!");
       return application;
 
-      // }
-      // throw new AuthenticationError("You need to be logged in!");
+       }
+       throw new AuthenticationError("You need to be logged in!");
     },
 
     ADD_APPLICATION_WITH_URL: async (parent, { URL }, context) => {
