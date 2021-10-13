@@ -5,8 +5,8 @@ const appSeeds = require("./application.json");
 
 db.once("open", async () => {
   try {
-    // await User.deleteMany({});
-    // await User.create(userSeeds);
+    await User.deleteMany({});
+    await User.create(userSeeds);
 
     await Application.deleteMany({});
     await Application.create(appSeeds);
