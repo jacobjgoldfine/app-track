@@ -48,10 +48,8 @@ export const ADD_APPLICATION = gql`
       salary: $salary
       location: $location
     ) {
-      _id
       jobTitle
       companyName
-      date_submitted
       salary
       location
     }

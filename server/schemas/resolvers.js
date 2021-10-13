@@ -10,7 +10,7 @@ const resolvers = {
     },
     applications: async (parent, { email }) => {
       const params = email ? { email } : {};
-      return Application.find(params).sort({ date_submitted: -1 });
+      return Application.find(params).sort({ _id: -1 });
     },
 
     application: async (parent, { applicationId }) => {

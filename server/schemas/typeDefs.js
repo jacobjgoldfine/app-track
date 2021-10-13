@@ -14,7 +14,6 @@ const typeDefs = gql`
     _id: ID
     jobTitle: String!
     companyName: String!
-    date_submitted: String
     salary: String
     location: String
   }
