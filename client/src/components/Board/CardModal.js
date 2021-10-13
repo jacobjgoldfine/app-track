@@ -37,10 +37,12 @@ export default function CardModal(props) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {props.jobTitle}
+            <p>{props.jobTitle}</p>
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            <p>{props.companyName}</p>
+            <p>{props.salary}</p>
+            <p>{props.location}</p>
           </Typography>
         </Box>
       </Modal>

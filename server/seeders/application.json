@@ -1,1 +1,14 @@
-[{ "jobTitle": "Full Stack Web Developer" }, { "jobTitle": "Senior Developer" }]
+[
+  {
+    "jobTitle": "Full Stack Web Developer",
+    "companyName": "Tech Inc",
+    "salary": "$65,000",
+    "location": "Dallas, TX"
+  },
+  {
+    "jobTitle": "Senior Developer",
+    "companyName": "Google",
+    "salary": "$120,000",
+    "location": "California"
+  }
+]
