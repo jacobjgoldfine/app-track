@@ -106,7 +106,10 @@ function RenderBoard() {
   const cardLanes = cardAps.map(function (element) {
     switch (element.lane) {
       case "Applied":
-        return cardApplied.push({ id: element._id, jobTitle: element.jobTitle });
+        return cardApplied.push({
+          id: element._id,
+          jobTitle: element.jobTitle,
+        });
 
       case "Wishlist":
         return cardWish.push({ id: element._id, jobTitle: element.jobTitle });
@@ -148,7 +151,9 @@ function RenderBoard() {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
+        <DragDropContext
+          onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+        >
           {/* each droppable needs to have its own key on it and needs to be unique */}
           {Object.entries(columns).map(([id, column]) => {
             return (
@@ -172,7 +177,9 @@ function RenderBoard() {
                           ref={provided.innerRef}
                           style={{
                             // if something is dragging over it then will be this color
-                            background: snapshot.isDraggingOver ? "lightblue" : "lightgrey",
+                            background: snapshot.isDraggingOver
+                              ? "lightblue"
+                              : "lightgrey",
                             padding: 4,
                             width: 300,
                             minHeight: 550,
@@ -182,7 +189,11 @@ function RenderBoard() {
                           {column?.cards.map((item, index) => {
                             return (
                               // draggableId must be a string.  Index will return to us what index we are dragging from and dropping to
-                              <Draggable key={item.id} draggableId={item.id} index={index}>
+                              <Draggable
+                                key={item.id}
+                                draggableId={item.id}
+                                index={index}
+                              >
                                 {(provided, snapshot) => {
                                   return (
                                     <div
@@ -196,7 +207,9 @@ function RenderBoard() {
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
                                         // if dragging will change the color
-                                        backgroundColor: snapshot.isDragging ? "#263B4A" : "#456C86",
+                                        backgroundColor: snapshot.isDragging
+                                          ? "#263B4A"
+                                          : "#456C86",
                                         color: "white",
                                         ...provided.draggableProps.style,
                                       }}

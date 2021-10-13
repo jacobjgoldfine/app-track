@@ -31,7 +31,7 @@ export default function CardModal(props) {
     <div>
       <Modal
         open={props.open}
-        // onClose={handleClose}
+        onClose={props.handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
