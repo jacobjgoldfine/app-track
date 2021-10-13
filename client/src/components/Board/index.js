@@ -106,25 +106,35 @@ function RenderBoard() {
   const cardLanes = cardAps.map(function (element) {
     switch (element.lane) {
       case "Applied":
+<<<<<<< HEAD
         return cardApplied.push({
           id: element._id,
           jobTitle: element.jobTitle,
         });
+=======
+        const cardIDA = uuidv4();
+        return cardApplied.push({ id: cardIDA, jobTitle: element.jobTitle, appID: element._id });
+>>>>>>> main
 
       case "Wishlist":
-        return cardWish.push({ id: element._id, jobTitle: element.jobTitle });
+        const cardIDW = uuidv4();
+        return cardWish.push({ id: cardIDW, jobTitle: element.jobTitle, appID: element._id });
 
       case "Rejected":
-        return cardReject.push({ id: element._id, jobTitle: element.jobTitle });
+        const cardIDR = uuidv4();
+        return cardReject.push({ id: cardIDR, jobTitle: element.jobTitle, appID: element._id });
 
       case "Follow-Up":
-        return cardFollow.push({ id: element._id, jobTitle: element.jobTitle });
+        const cardIDF = uuidv4();
+        return cardFollow.push({ id: cardIDF, jobTitle: element.jobTitle, appID: element._id });
 
       default:
         break;
     }
     return cardLanes;
   });
+
+  console.log(cardApplied);
   // useEffect(() => {
   //   let updatedColumns = {
   //     ...columnLanes,
