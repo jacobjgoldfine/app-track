@@ -1,12 +1,14 @@
-import { useQuery } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
+//set uuid into a global variable and grab?
+
+import { useQuery } from "@apollo/client";
 import { QUERY_ALL_APPLICATIONS } from "../../utils/queries";
 
-//query the applications, map over applications, push into the array
-//switch for each lane
-//create new const array for each lane that gets fed into the columnLane
+//importing modal and button to open when clicked on the card
+import Button from "@mui/material/Button";
+import CardModal from "./CardModal";
 
 //cards that will render onto the lanes/columns (examples) - need to create mutation and pull from database
 // const cardApplied = [
@@ -21,21 +23,21 @@ const cardFollow = [];
 //columns/lanes that the cards will populate onto
 const columnLanes = {
   //uuid populates a random specific id for the group id - this will apply to the lane the card will be inside of
-  [uuidv4()]: {
+  applied1: {
     lane: "Applied",
     cards: cardApplied,
   },
-  [uuidv4()]: {
+  wishlist1: {
     lane: "Wishlist",
-    cards: [],
+    cards: cardWish,
   },
-  [uuidv4()]: {
+  rejected1: {
     lane: "Rejected",
-    cards: [],
+    cards: cardReject,
   },
-  [uuidv4()]: {
+  followUp1: {
     lane: "Follow-up",
-    cards: [],
+    cards: cardFollow,
   },
 };
 
@@ -124,81 +126,107 @@ function RenderBoard() {
     return cardLanes;
   });
 
-  console.log(cardLanes);
+  // useEffect(() => {
+  //   let updatedColumns = {
+  //     ...columnLanes,
+  //     //have to find a way to set to applied id
+  //     applied1: { lane: "Applied", cards: data?.applications },
+  //   };
+  //   if (loading) {
+  //     console.log("loading");
+  //   } else {
+  //     setColumns(updatedColumns);
+  //   }
+
+  //   return () => {};
+  // }, [data]);
+
+  //opens modal - sets it to closed first and then should expand once click button
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <div style={{ display: "flex", justifyContent: "center", height: "100%" }}>
       {/* at minimum needs 'onDragEnd' = dragdropcontext will reorder the items - if drag into a new column, will delete from the old column */}
-      <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
-        {/* each droppable needs to have its own key on it and needs to be unique */}
-        {Object.entries(columns).map(([id, column]) => {
-          return (
-            // takes in the children (cards)
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <h2>{column.lane}</h2>
-              {/* styling the margin between each column */}
-              <div style={{ margin: 8 }}>
-                <Droppable droppableId={id} key={id}>
-                  {/* function that returns props - snapshot = the current thing that you have */}
-                  {(provided, snapshot) => {
-                    return (
-                      <div
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        style={{
-                          // if something is dragging over it then will be this color
-                          background: snapshot.isDraggingOver ? "lightblue" : "lightgrey",
-                          padding: 4,
-                          width: 300,
-                          minHeight: 550,
-                        }}
-                      >
-                        {/* will map over items within the columns */}
-                        {column.cards.map((item, index) => {
-                          return (
-                            // draggableId must be a string.  Index will return to us what index we are dragging from and dropping to
-                            <Draggable key={item.id} draggableId={item.id} index={index}>
-                              {(provided, snapshot) => {
-                                return (
-                                  <div
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    // dragHandleProps picks up the item
-                                    {...provided.dragHandleProps}
-                                    style={{
-                                      userSelect: "none",
-                                      padding: 16,
-                                      margin: "0 0 8px 0",
-                                      minHeight: "50px",
-                                      // if dragging will change the color
-                                      backgroundColor: snapshot.isDragging ? "#263B4A" : "#456C86",
-                                      color: "white",
-                                      ...provided.draggableProps.style,
-                                    }}
-                                  >
-                                    {item.jobTitle}
-                                  </div>
-                                );
-                              }}
-                            </Draggable>
-                          );
-                        })}
-                        {provided.placeholder}
-                      </div>
-                    );
-                  }}
-                </Droppable>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
+          {/* each droppable needs to have its own key on it and needs to be unique */}
+          {Object.entries(columns).map(([id, column]) => {
+            return (
+              // takes in the children (cards)
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <h2>{column.lane}</h2>
+                {/* styling the margin between each column */}
+                <div style={{ margin: 8 }}>
+                  <Droppable droppableId={id} key={id}>
+                    {/* function that returns props - snapshot = the current thing that you have */}
+                    {(provided, snapshot) => {
+                      return (
+                        <div
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                          style={{
+                            // if something is dragging over it then will be this color
+                            background: snapshot.isDraggingOver ? "lightblue" : "lightgrey",
+                            padding: 4,
+                            width: 300,
+                            minHeight: 550,
+                          }}
+                        >
+                          {/* will map over items within the columns */}
+                          {column?.cards.map((item, index) => {
+                            return (
+                              // draggableId must be a string.  Index will return to us what index we are dragging from and dropping to
+                              <Draggable key={item.id} draggableId={item.id} index={index}>
+                                {(provided, snapshot) => {
+                                  return (
+                                    <div
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      // dragHandleProps picks up the item
+                                      {...provided.dragHandleProps}
+                                      style={{
+                                        userSelect: "none",
+                                        padding: 16,
+                                        margin: "0 0 8px 0",
+                                        minHeight: "50px",
+                                        // if dragging will change the color
+                                        backgroundColor: snapshot.isDragging ? "#263B4A" : "#456C86",
+                                        color: "white",
+                                        ...provided.draggableProps.style,
+                                      }}
+                                    >
+                                      {item.jobTitle}
+                                      <Button onClick={handleOpen}>
+                                        Expand
+                                        <CardModal id={item._id} open={open} />
+                                      </Button>
+                                    </div>
+                                  );
+                                }}
+                              </Draggable>
+                            );
+                          })}
+                          {provided.placeholder}
+                        </div>
+                      );
+                    }}
+                  </Droppable>
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </DragDropContext>
+            );
+          })}
+        </DragDropContext>
+      )}
     </div>
   );
 }

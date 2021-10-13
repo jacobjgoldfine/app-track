@@ -8,7 +8,6 @@ const applicationSchema = new Schema({
   },
   companyName: {
     type: String,
-    required: true,
   },
   // questionable?  Do we want to enter manual date or have it autopopulate?
   // date_submitted: {
