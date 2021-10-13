@@ -8,19 +8,6 @@ import { useMutation } from "@apollo/client";
 import { ADD_APPLICATION, ADD_APPLICATION_WITH_URL } from "../../utils/mutations";
 import SendIcon from "@mui/icons-material/Send";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 900,
-  height: 300,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 const style2 = {
   position: "absolute",
   top: "50%",
@@ -34,17 +21,14 @@ const style2 = {
   p: 4,
 };
 
-function DetailsModal() {
+export default function  ManualApp() {
   const [open, setOpen] = React.useState(false);
-  let handleOpen = () => {
+
+  const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const sucessmessage = () => {
-    alert("Your application is submitted! Click outside this box to exit!");
   };
 
   const [addApplication, { error }] = useMutation(ADD_APPLICATION);
@@ -63,8 +47,10 @@ function DetailsModal() {
   });
 
   // need to add mutation
-  const handleSubmit = (e) => {
+  const handleManualSubmit = (e) => {
     e.preventDefault();
+    handleClose();
+    console.log('YOU DID IT!')
     addApplication({
       variables: {
         jobTitle: formData.jobTitle,
@@ -77,13 +63,8 @@ function DetailsModal() {
   };
 
   return (
-    <React.Fragment>
-      <Button sx={{ mr: 82 }} onClick={handleOpen} variant="outlined">
-        Skip
-      </Button>
-      <Button onClick={handleOpen} variant="contained" endIcon={<SendIcon />}>
-        Submit{" "}
-      </Button>
+    <div>
+      <Button onClick={handleOpen}>New Application</Button>
       <Modal
         hideBackdrop
         open={open}
@@ -96,7 +77,7 @@ function DetailsModal() {
           <p id="child-modal-description">
             Please complete the fields below and click submit to post your new application.
           </p>
-          <form id="form-input" noValidate autoComplete="off" onSubmit={handleSubmit}>
+          <form id="form-input" noValidate autoComplete="off">
             <TextField
               fullWidth
               id="jobTitle"
@@ -142,81 +123,9 @@ function DetailsModal() {
               variant="outlined"
             />
           </form>
-          <Button sx={{ ml: 90 }} onClick={handleClose} variant="contained" endIcon={<SendIcon />}>
+          <Button sx={{ ml: 90 }} onClick={handleManualSubmit} variant="contained" type='submit' endIcon={<SendIcon />}>
             Submit Application{" "}
           </Button>
-        </Box>
-      </Modal>
-    </React.Fragment>
-  );
-}
-
-export default function UrlModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const closeAll = () => {
-    setOpen(false);
-  };
-
-  //useMutation to add form elements to DB with URL
-  const [addApplicationURL, { error }] = useMutation(ADD_APPLICATION_WITH_URL);
-
-  //will console log any errors
-  if (error) {
-    console.log("error:", error);
-  }
-
-  //takes form info from the input fields and sets up a state for them
-  const [formData, setFormData] = useState({
-    URL: "",
-  });
-
-  // need to add mutation
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addApplicationURL({
-      variables: {
-        URL: formData.URL,
-      },
-    });
-    console.log(formData);
-  };
-
-  return (
-    <div>
-      <Button onClick={handleOpen}>New Application</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        onCloseAll={closeAll}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <Box sx={{ ...style }}>
-          <h2 id="parent-modal-title">Indeed URL</h2>
-          <p id="parent-modal-description">
-            If you are found this job through Indeed, paste the job posting link in the URL.
-          </p>
-          <form>
-            <TextField
-              fullWidth
-              id="IndeedURL"
-              label="Indeed URL"
-              type="text"
-              onChange={(e) => setFormData({ ...formData, URL: e.target.value })}
-              value={formData.URL}
-              margin="normal"
-              variant="outlined"
-              onSubmit={handleSubmit}
-            />
-          </form>
-          <DetailsModal />
         </Box>
       </Modal>
     </div>

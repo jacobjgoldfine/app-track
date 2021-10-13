@@ -8,12 +8,15 @@ import Link from "@mui/material/Link";
 // import Paper from "@mui/material/Paper";
 // import Box from "@mui/material/Box";
 // import Grid from "@mui/material/Grid";
-import Modal from "../components/Board/modal";
+import URLModal from "../components/Board/urlModal";
+import ManualApp from "../components/Board/manualAppModel";
+
 
 const Profile = () => {
   return (
     <main>
-      <Modal />
+      <URLModal />
+      <ManualApp/>
       <div>
         <Link href="/" variant="body2">
           <button id="homeBtn">Home</button>
