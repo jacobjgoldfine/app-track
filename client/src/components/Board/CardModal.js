@@ -58,7 +58,6 @@ export default function CardModal(props) {
                   <p>{data.application.location}</p>
                 </div>
               </Typography>
-              {/* <Button onClick={props.handleClose}>Close</Button> */}
             </Box>
           </Modal>
         </div>
