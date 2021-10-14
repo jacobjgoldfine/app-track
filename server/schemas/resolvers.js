@@ -62,7 +62,7 @@ const resolvers = {
       return application;
 
        }
-       throw new AuthenticationError("You need to be logged in!");
+      //  throw new AuthenticationError("You need to be logged in!");
     },
 
     ADD_APPLICATION_WITH_URL: async (parent, { URL }, context) => {
