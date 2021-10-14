@@ -202,9 +202,10 @@ function RenderBoard() {
                         >
                           {/* will map over items within the columns */}
                           {column?.cards.map((item, index) => {
+                            console.log("This is the item", item);
                             return (
                               // draggableId must be a string.  Index will return to us what index we are dragging from and dropping to
-                              <Draggable key={item.id} draggableId={item.appID} index={index}>
+                              <Draggable key={item.id} draggableId={item.id} index={index}>
                                 {(provided, snapshot) => {
                                   return (
                                     <div
@@ -224,10 +225,17 @@ function RenderBoard() {
                                       }}
                                     >
                                       {item.jobTitle}
-                                      <Button onClick={handleOpen}>
-                                        Expand
-                                        <CardModal id={item._id} open={open} />
-                                      </Button>
+                                      <Button onClick={handleOpen}>Expand</Button>
+
+                                      <CardModal
+                                        appID={item.appID}
+                                        open={open}
+                                        onClose={handleClose}
+                                        jobTitle={item.jobTitle}
+                                        companyName={item.companyName}
+                                        salary={item.salary}
+                                        location={item.location}
+                                      />
                                     </div>
                                   );
                                 }}
