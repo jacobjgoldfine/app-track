@@ -38,6 +38,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addApplication(jobTitle: String!, companyName: String!, salary: String, location: String): Application
     ADD_APPLICATION_WITH_URL(URL: String!): Application
+    updateCard(appID: String, lane: String): Application
   }
 `;
 
