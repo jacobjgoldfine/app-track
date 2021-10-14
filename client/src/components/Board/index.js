@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
-//set uuid into a global variable and grab?
 
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ALL_APPLICATIONS } from "../../utils/queries";
@@ -205,7 +204,7 @@ function RenderBoard() {
                             console.log("This is the item", item);
                             return (
                               // draggableId must be a string.  Index will return to us what index we are dragging from and dropping to
-                              <Draggable key={item.id} draggableId={item.id} index={index}>
+                              <Draggable key={item.id} draggableId={item.appID} index={index}>
                                 {(provided, snapshot) => {
                                   return (
                                     <div
