@@ -107,19 +107,36 @@ function RenderBoard() {
     switch (element.lane) {
       case "Applied":
         const cardIDA = uuidv4();
-        return cardApplied.push({ id: cardIDA, jobTitle: element.jobTitle, appID: element._id });
+        return cardApplied.push({
+          id: cardIDA,
+          jobTitle: element.jobTitle,
+          companyName: element.companyName,
+          appID: element._id,
+        });
 
       case "Wishlist":
         const cardIDW = uuidv4();
-        return cardWish.push({ id: cardIDW, jobTitle: element.jobTitle, appID: element._id });
+        return cardWish.push({
+          id: cardIDW,
+          jobTitle: element.jobTitle,
+          appID: element._id,
+        });
 
       case "Rejected":
         const cardIDR = uuidv4();
-        return cardReject.push({ id: cardIDR, jobTitle: element.jobTitle, appID: element._id });
+        return cardReject.push({
+          id: cardIDR,
+          jobTitle: element.jobTitle,
+          appID: element._id,
+        });
 
       case "Follow-Up":
         const cardIDF = uuidv4();
-        return cardFollow.push({ id: cardIDF, jobTitle: element.jobTitle, appID: element._id });
+        return cardFollow.push({
+          id: cardIDF,
+          jobTitle: element.jobTitle,
+          appID: element._id,
+        });
 
       default:
         break;
@@ -154,7 +171,9 @@ function RenderBoard() {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
+        <DragDropContext
+          onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+        >
           {/* each droppable needs to have its own key on it and needs to be unique */}
           {Object.entries(columns).map(([id, column]) => {
             return (
@@ -178,7 +197,9 @@ function RenderBoard() {
                           ref={provided.innerRef}
                           style={{
                             // if something is dragging over it then will be this color
-                            background: snapshot.isDraggingOver ? "lightblue" : "lightgrey",
+                            background: snapshot.isDraggingOver
+                              ? "lightblue"
+                              : "lightgrey",
                             padding: 4,
                             width: 300,
                             minHeight: 550,
@@ -186,9 +207,14 @@ function RenderBoard() {
                         >
                           {/* will map over items within the columns */}
                           {column?.cards.map((item, index) => {
+                            console.log("This is the item", item);
                             return (
                               // draggableId must be a string.  Index will return to us what index we are dragging from and dropping to
-                              <Draggable key={item.id} draggableId={item.id} index={index}>
+                              <Draggable
+                                key={item.id}
+                                draggableId={item.id}
+                                index={index}
+                              >
                                 {(provided, snapshot) => {
                                   return (
                                     <div
@@ -202,7 +228,9 @@ function RenderBoard() {
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
                                         // if dragging will change the color
-                                        backgroundColor: snapshot.isDragging ? "#263B4A" : "#456C86",
+                                        backgroundColor: snapshot.isDragging
+                                          ? "#263B4A"
+                                          : "#456C86",
                                         color: "white",
                                         ...provided.draggableProps.style,
                                       }}
@@ -210,8 +238,17 @@ function RenderBoard() {
                                       {item.jobTitle}
                                       <Button onClick={handleOpen}>
                                         Expand
-                                        <CardModal id={item._id} open={open} />
                                       </Button>
+
+                                      <CardModal
+                                        appID={item.appID}
+                                        open={open}
+                                        onClose={handleClose}
+                                        jobTitle={item.jobTitle}
+                                        companyName={item.companyName}
+                                        salary={item.salary}
+                                        location={item.location}
+                                      />
                                     </div>
                                   );
                                 }}
