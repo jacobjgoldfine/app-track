@@ -94,6 +94,11 @@ const resolvers = {
 
       return application;
     },
+
+    updateCard: async (parent, { appID, lane }) => {
+      const app = await Application.findOneAndUpdate({ _id: appID }, { lane: lane }, { new: true });
+      return app;
+    },
   },
 };
 
