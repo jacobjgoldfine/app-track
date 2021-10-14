@@ -48,3 +48,12 @@ export const ADD_APPLICATION_WITH_URL = gql`
     }
   }
 `;
+
+export const UPDATE_CARD_LANE = gql`
+  mutation updateCard($appID: String, $lane: String) {
+    updateCard(appID: $appID, lane: $lane) {
+      _id
+      lane
+    }
+  }
+`;
