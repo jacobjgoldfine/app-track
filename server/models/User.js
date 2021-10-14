@@ -23,6 +23,12 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
+  applications: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Application',
+    },
+  ],
 });
 
 // set up pre-save middleware to create password
