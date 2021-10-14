@@ -1,6 +1,6 @@
 const parser = require("node-html-parser");
-
-const scraperapiClient = require("scraperapi-sdk")("374454f9335b501f85e400cf27131120");
+require("dotenv").config();
+const scraperapiClient = require("scraperapi-sdk")(process.env.SCRAPE);
 
 const ParseURLScrape = async (URL) => {
   const response = await scraperapiClient.get(`${URL}`);

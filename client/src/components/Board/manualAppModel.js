@@ -49,17 +49,24 @@ export default function  ManualApp() {
   // need to add mutation
   const handleManualSubmit = (e) => {
     e.preventDefault();
-    handleClose();
-    console.log('YOU DID IT!')
-    addApplication({
-      variables: {
-        jobTitle: formData.jobTitle,
-        companyName: formData.companyName,
-        salary: formData.salary,
-        location: formData.location,
-      },
-    });
-    console.log(formData);
+    if (formData.jobTitle === "" || formData.jobTitle === null ){
+      alert("Please enter a Job Title")
+      return;
+    } else if (formData.companyName === "" || formData.companyName === null) {
+      alert(" Please enter a the Company name")
+      return; 
+    } else { 
+      handleClose();
+      console.log('YOU DID IT!')
+      addApplication({
+        variables: {
+          jobTitle: formData.jobTitle,
+          companyName: formData.companyName,
+          salary: formData.salary,
+          location: formData.location,
+        },
+      });
+      console.log(formData);}
   };
 
   return (

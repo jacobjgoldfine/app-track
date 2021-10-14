@@ -21,6 +21,7 @@ const style = {
   p: 4,
 };
 
+
 export default function UrlModal() {
   const [open, setOpen] = React.useState(false);
   
@@ -47,13 +48,17 @@ export default function UrlModal() {
   // need to add mutation
   const handleSubmitIndeedForm = (e) => {
     e.preventDefault();
-    console.log('indeed form')
-    addApplicationURL({
+    if (formData.URL === "" || formData.URL=== null){
+      alert("please enter a Indeed URL")
+      return;
+    } else { 
+      console.log('indeed form')
+      addApplicationURL({
       variables: {
         URL: formData.URL,
       },
     });
-    console.log(formData);
+     console.log(formData);}
   };
 
   return (
@@ -74,6 +79,7 @@ export default function UrlModal() {
             <TextField
               fullWidth
               id="IndeedURL"
+              name= "urlLink"
               label="Indeed URL"
               type="text"
               onChange={(e) => setFormData({ ...formData, URL: e.target.value })}
