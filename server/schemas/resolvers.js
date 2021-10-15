@@ -99,6 +99,11 @@ const resolvers = {
       const app = await Application.findOneAndUpdate({ _id: appID }, { lane: lane }, { new: true });
       return app;
     },
+
+    deleteApp: async (parent, { appID, lane }) => {
+      const del = await Application.findOneAndDelete({ _id: appID });
+      return del;
+    },
   },
 };
 
