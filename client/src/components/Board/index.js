@@ -47,6 +47,7 @@ function RenderBoard() {
       cards: [],
     },
   });
+
   const { loading, data } = useQuery(QUERY_ALL_APPLICATIONS);
   const [updateCard, { error }] = useMutation(UPDATE_CARD_LANE);
 
@@ -114,9 +115,6 @@ function RenderBoard() {
       },
     });
   }, [data]);
-
-  console.log("QUERY PROCESSING", loading);
-  console.log("QUERY DATA", data);
 
   //if there is no other column/destination then the card will just bounce back
   const onDragEnd = async (result, columns, setColumns) => {

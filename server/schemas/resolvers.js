@@ -10,15 +10,12 @@ const resolvers = {
     },
     applications: async (parent, args, context) => {
       if (context.user) {
-        return Application.find({ user_id: context.user._id }).populate(
-          "applications"
-        );
+        return Application.find({ user_id: context.user._id }).populate("applications");
       }
       throw new AuthenticationError("You need to be logged in!");
     },
 
     application: async (parent, { applicationId }) => {
-      console.log(applicationId);
       return Application.findById(applicationId);
     },
   },
@@ -47,11 +44,7 @@ const resolvers = {
       return { token, user };
     },
 
-    addApplication: async (
-      parent,
-      { jobTitle, companyName, salary, location },
-      context
-    ) => {
+    addApplication: async (parent, { jobTitle, companyName, salary, location }, context) => {
       if (context.user) {
         const application = await Application.create({
           jobTitle,
@@ -86,11 +79,13 @@ const resolvers = {
           companyName,
           location,
           salary,
+          user_id: context.user._id,
         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { application: application._id } }
+          { $addToSet: { application: application._id } },
+          { new: true }
         );
 
         return application;
@@ -100,15 +95,12 @@ const resolvers = {
     },
 
     updateCard: async (parent, { appID, lane }) => {
-      const app = await Application.findOneAndUpdate(
-        { _id: appID },
-        { lane: lane },
-        { new: true }
-      );
+      const app = await Application.findOneAndUpdate({ _id: appID }, { lane: lane }, { new: true });
       return app;
     },
 
-    deleteApp: async (parent, { appID, lane }) => {
+    deleteApp: async (parent, { appID }) => {
+      console.log("APPID", appID);
       const del = await Application.findOneAndDelete({ _id: appID });
       return del;
     },
