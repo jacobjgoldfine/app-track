@@ -186,7 +186,7 @@ function RenderBoard() {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", height: "100%" }}>
+    <div className= "board">
       {/* at minimum needs 'onDragEnd' = dragdropcontext will reorder the items - if drag into a new column, will delete from the old column */}
       {loading ? (
         <div>Loading...</div>
@@ -198,14 +198,8 @@ function RenderBoard() {
           {Object.entries(columns).map(([id, column]) => {
             return (
               // takes in the children (cards)
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <h2>{column.lane}</h2>
+              <div>
+                <h2 style={{textAlign:"center"}}>{column.lane}</h2>
                 {/* styling the margin between each column */}
                 <div style={{ margin: 8 }}>
                   <Droppable droppableId={id} key={id}>

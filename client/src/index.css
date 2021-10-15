@@ -3,7 +3,8 @@
 #home-paragraph {
   font-size: 30px;
   text-align: center;
-  font-family: "Roboto Mono", monospace;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 300;
 }
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -377,7 +378,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "JetBrains Mono", monospace;
+  font-family: "Source Sans Pro", sans-serif;
   margin: 0 0 0.5rem;
   line-height: 1.25;
 }
@@ -932,7 +933,7 @@ a:hover {
 }
 
 .bg-info {
-  background-color: #1bbc9b !important;
+  background-color: #3c9ceb !important;
 }
 
 .bg-danger {
@@ -996,7 +997,7 @@ a:hover {
 }
 
 .btn:hover {
-  background-color: #cecece;
+  background-color: #02020200;
 }
 
 .btn.btn-squared {
@@ -1070,7 +1071,7 @@ a:hover {
 }
 
 .btn.btn-white:hover {
-  background-color: #cccccc;
+  background-color: #000000;
 }
 
 .btn.btn-black {
@@ -1712,5 +1713,28 @@ label form [type="radio"] {
   }
   .align-content-center-xl {
     align-content: center;
+  }
+}
+
+.board {
+  display: grid;
+  align-content: center;
+  height: 100%;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .board {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .board {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    height: auto;
   }
 }
