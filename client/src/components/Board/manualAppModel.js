@@ -5,7 +5,7 @@ import { TextField } from "@mui/material";
 import { useState } from "react";
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_APPLICATION, ADD_APPLICATION_WITH_URL } from "../../utils/mutations";
+import { ADD_APPLICATION } from "../../utils/mutations";
 import SendIcon from "@mui/icons-material/Send";
 
 const style2 = {
@@ -44,6 +44,7 @@ export default function ManualApp() {
     companyName: "",
     salary: "",
     location: "",
+    details: "",
   });
 
   // need to add mutation
@@ -64,6 +65,7 @@ export default function ManualApp() {
           companyName: formData.companyName,
           salary: formData.salary,
           location: formData.location,
+          details: formData.details,
         },
       });
       window.location.reload();
@@ -83,7 +85,8 @@ export default function ManualApp() {
         <Box sx={{ ...style2 }}>
           <h2 id="child-modal-title">New Application Details</h2>
           <p id="child-modal-description">
-            Please complete the fields below and click submit to post your new application.
+            Please complete the fields below and click submit to post your new
+            application.
           </p>
           <form id="form-input" noValidate autoComplete="off">
             <TextField
@@ -92,7 +95,9 @@ export default function ManualApp() {
               label="Job Title"
               type="text"
               name="Job Title"
-              onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, jobTitle: e.target.value })
+              }
               value={formData.jobTitle}
               margin="normal"
               variant="outlined"
@@ -104,7 +109,9 @@ export default function ManualApp() {
               id="companyName"
               label="Company Name"
               type="text"
-              onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, companyName: e.target.value })
+              }
               value={formData.companyName}
               margin="normal"
               variant="outlined"
@@ -115,7 +122,9 @@ export default function ManualApp() {
               id="salary"
               label="Salary"
               type="text"
-              onChange={(e) => setFormData({ ...formData, salary: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, salary: e.target.value })
+              }
               value={formData.salary}
               margin="normal"
               variant="outlined"
@@ -125,13 +134,33 @@ export default function ManualApp() {
               id="location"
               label="location"
               type="text"
-              onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, location: e.target.value })
+              }
               value={formData.location}
               margin="normal"
               variant="outlined"
             />
+            <TextField
+              fullWidth
+              id="details"
+              label="details"
+              type="text"
+              onChange={(e) =>
+                setFormData({ ...formData, details: e.target.value })
+              }
+              value={formData.details}
+              margin="normal"
+              variant="outlined"
+            />
           </form>
-          <Button sx={{ ml: 90 }} onClick={handleManualSubmit} variant="contained" type="submit" endIcon={<SendIcon />}>
+          <Button
+            sx={{ ml: 90 }}
+            onClick={handleManualSubmit}
+            variant="contained"
+            type="submit"
+            endIcon={<SendIcon />}
+          >
             Submit Application{" "}
           </Button>
         </Box>

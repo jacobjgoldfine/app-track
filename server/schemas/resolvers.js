@@ -10,7 +10,9 @@ const resolvers = {
     },
     applications: async (parent, args, context) => {
       if (context.user) {
-        return Application.find({ user_id: context.user._id }).populate("applications");
+        return Application.find({ user_id: context.user._id }).populate(
+          "applications"
+        );
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -44,13 +46,18 @@ const resolvers = {
       return { token, user };
     },
 
-    addApplication: async (parent, { jobTitle, companyName, salary, location }, context) => {
+    addApplication: async (
+      parent,
+      { jobTitle, companyName, salary, location, details },
+      context
+    ) => {
       if (context.user) {
         const application = await Application.create({
           jobTitle,
           companyName,
           salary,
           location,
+          details,
           user_id: context.user._id,
         });
 
@@ -95,7 +102,11 @@ const resolvers = {
     },
 
     updateCard: async (parent, { appID, lane }) => {
-      const app = await Application.findOneAndUpdate({ _id: appID }, { lane: lane }, { new: true });
+      const app = await Application.findOneAndUpdate(
+        { _id: appID },
+        { lane: lane },
+        { new: true }
+      );
       return app;
     },
 
