@@ -77,3 +77,11 @@ export const UPDATE_CARD_LANE = gql`
     }
   }
 `;
+
+export const DELETE_APPLICATION = gql`
+  mutation deleteApp($appID: String) {
+    deleteApp(appID: $appID) {
+      _id
+    }
+  }
+`;

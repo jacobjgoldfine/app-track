@@ -101,6 +101,11 @@ const resolvers = {
       );
       return app;
     },
+
+    deleteApp: async (parent, { appID, lane }) => {
+      const del = await Application.findOneAndDelete({ _id: appID });
+      return del;
+    },
   },
 };
 

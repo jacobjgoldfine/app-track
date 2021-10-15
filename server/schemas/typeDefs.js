@@ -48,6 +48,7 @@ const typeDefs = gql`
     ): Application
     ADD_APPLICATION_WITH_URL(URL: String!): Application
     updateCard(appID: String, lane: String): Application
+    deleteApp(appID: String): Application
   }
 `;
 
