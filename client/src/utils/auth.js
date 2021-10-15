@@ -23,6 +23,7 @@ class AuthService {
     return false;
   }
 
+  //gets token from local storage
   getToken() {
     return localStorage.getItem("id_token");
   }
