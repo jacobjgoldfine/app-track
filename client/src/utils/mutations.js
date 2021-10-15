@@ -51,7 +51,6 @@ export const ADD_APPLICATION = gql`
       _id
       jobTitle
       companyName
-      date_submitted
       salary
       location
     }

@@ -25,12 +25,10 @@ const applicationSchema = new Schema({
     type: String,
     default: "Applied",
   },
-  user_id: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
+  user_id: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Application = model("Application", applicationSchema);
