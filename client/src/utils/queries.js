@@ -18,6 +18,7 @@ export const QUERY_SINGLE_APPLICATION = gql`
       companyName
       salary
       location
+      details
     }
   }
 `;

@@ -14,6 +14,9 @@ const applicationSchema = new Schema({
   location: {
     type: String,
   },
+  details: {
+    type: String,
+  },
   lane: {
     type: String,
     default: "Applied",

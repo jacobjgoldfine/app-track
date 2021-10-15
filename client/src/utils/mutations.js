@@ -40,18 +40,21 @@ export const ADD_APPLICATION = gql`
     $companyName: String!
     $salary: String
     $location: String
+    $details: String
   ) {
     addApplication(
       jobTitle: $jobTitle
       companyName: $companyName
       salary: $salary
       location: $location
+      details: $details
     ) {
       _id
       jobTitle
       companyName
       salary
       location
+      details
     }
   }
 `;
