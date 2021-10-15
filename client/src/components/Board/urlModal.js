@@ -21,10 +21,9 @@ const style = {
   p: 4,
 };
 
-
 export default function UrlModal() {
   const [open, setOpen] = React.useState(false);
-  
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -46,19 +45,20 @@ export default function UrlModal() {
   });
 
   // need to add mutation
-  const handleSubmitIndeedForm = (e) => {
+  const handleSubmitIndeedForm = async (e) => {
     e.preventDefault();
-    if (formData.URL === "" || formData.URL=== null){
-      alert("please enter a Indeed URL")
+    if (formData.URL === "" || formData.URL === null) {
+      alert("please enter a Indeed URL");
       return;
-    } else { 
-      console.log('indeed form')
-      addApplicationURL({
-      variables: {
-        URL: formData.URL,
-      },
-    });
-     console.log(formData);}
+    } else {
+      console.log("indeed form");
+      await addApplicationURL({
+        variables: {
+          URL: formData.URL,
+        },
+      });
+      window.location.reload();
+    }
   };
 
   return (
@@ -79,14 +79,13 @@ export default function UrlModal() {
             <TextField
               fullWidth
               id="IndeedURL"
-              name= "urlLink"
+              name="urlLink"
               label="Indeed URL"
               type="text"
               onChange={(e) => setFormData({ ...formData, URL: e.target.value })}
               value={formData.URL}
               margin="normal"
               variant="outlined"
-              
             />
           </form>
           <Button onClick={handleSubmitIndeedForm} variant="contained" endIcon={<SendIcon />}>
