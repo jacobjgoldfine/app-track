@@ -45,14 +45,14 @@ export default function UrlModal() {
   });
 
   // need to add mutation
-  const handleSubmitIndeedForm = (e) => {
+  const handleSubmitIndeedForm = async (e) => {
     e.preventDefault();
     if (formData.URL === "" || formData.URL === null) {
       alert("please enter a Indeed URL");
       return;
     } else {
       console.log("indeed form");
-      addApplicationURL({
+      await addApplicationURL({
         variables: {
           URL: formData.URL,
         },
