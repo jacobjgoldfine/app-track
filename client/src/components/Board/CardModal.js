@@ -52,9 +52,9 @@ export default function CardModal(props) {
               </Typography>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 <div>
-                  <p>{data.application.companyName}</p>
-                  <p>{data.application.salary}</p>
-                  <p>{data.application.location}</p>
+                  <p>Company: {data.application.companyName}</p>
+                  <p>Salary: {data.application.salary}</p>
+                  <p>Location: {data.application.location}</p>
                 </div>
               </Typography>
             </Box>
