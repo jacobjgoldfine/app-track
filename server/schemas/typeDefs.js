@@ -14,10 +14,10 @@ const typeDefs = gql`
     _id: ID
     jobTitle: String!
     companyName: String!
-    date_submitted: String
     salary: String
     location: String
     lane: String
+    user_id: User
   }
 
   type Auth {
@@ -28,7 +28,7 @@ const typeDefs = gql`
   type Query {
     users: [User]
     application(applicationId: ID!): Application
-    applications: [Application]
+    applications(user_id: ID): [Application]
     me: User
   }
 
