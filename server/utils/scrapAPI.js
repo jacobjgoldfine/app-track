@@ -12,7 +12,7 @@ const ParseURLScrape = async (URL) => {
     location: root.querySelector(".jobsearch-JobInfoHeader-subtitle")?.lastChild?.rawText,
     salary: root.querySelector(".jobsearch-JobMetadataHeader-item")?.firstChild?.rawText,
     // type: root.querySelector(".jobsearch-JobMetadataHeader-item")?.lastChild?.rawText,
-    // fullDescription: root.querySelector("#jobDescriptionText")?.rawText,
+    details: root.querySelector("#jobDescriptionText")?.rawText,
   };
   // console.log(parsedData);
   return parsedData;
