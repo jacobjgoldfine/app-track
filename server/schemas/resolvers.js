@@ -66,7 +66,6 @@ const resolvers = {
           { $addToSet: { applications: application._id } },
           { new: true }
         );
-        console.log("User ID", context.user._id);
         return application;
       } else {
         throw new AuthenticationError("You need to be logged in!");
@@ -75,7 +74,6 @@ const resolvers = {
 
     ADD_APPLICATION_WITH_URL: async (parent, { URL }, context) => {
       const data = await ParseURLScrape(URL);
-      console.log(data);
       const jobTitle = data.jobTitle;
       const companyName = data.companyName;
       const salary = data.salary;
@@ -111,7 +109,6 @@ const resolvers = {
     },
 
     deleteApp: async (parent, { appID }) => {
-      console.log("APPID", appID);
       const del = await Application.findOneAndDelete({ _id: appID });
       return del;
     },

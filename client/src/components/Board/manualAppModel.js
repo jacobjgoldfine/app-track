@@ -58,7 +58,7 @@ export default function ManualApp() {
       return;
     } else {
       handleClose();
-      console.log("YOU DID IT!");
+      console.log("Ben Lacy: YOU DID IT!");
       addApplication({
         variables: {
           jobTitle: formData.jobTitle,
@@ -74,7 +74,14 @@ export default function ManualApp() {
 
   return (
     <div>
-      <Button sx={{ mt: 2 }} variant="outlined" size="medium" onClick={handleOpen}>New Application</Button>
+      <Button
+        sx={{ mt: 2 }}
+        variant="outlined"
+        size="medium"
+        onClick={handleOpen}
+      >
+        New Application
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}

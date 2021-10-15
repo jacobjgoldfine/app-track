@@ -56,7 +56,6 @@ export default function CardModal(props) {
         <div>Loading...</div>
       ) : (
         <div>
-          {console.log("this is data:", data)}
           <Modal
             open={props.open && props.activeCard === props.appID}
             onClose={handleClose}

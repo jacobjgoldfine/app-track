@@ -44,7 +44,7 @@ export default function UrlModal() {
     URL: "",
   });
 
-  // need to add mutation
+  // form handler for the url scraper
   const handleSubmitIndeedForm = async (e) => {
     e.preventDefault();
     if (formData.URL === "" || formData.URL === null) {
@@ -63,7 +63,9 @@ export default function UrlModal() {
 
   return (
     <div>
-      <Button variant="outlined" size="medium" onClick={handleOpen}>New Application With Indeed URL</Button>
+      <Button variant="outlined" size="medium" onClick={handleOpen}>
+        New Application With Indeed URL
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -73,7 +75,8 @@ export default function UrlModal() {
         <Box sx={{ ...style }}>
           <h2 id="parent-modal-title">Indeed URL</h2>
           <p id="parent-modal-description">
-            If you are found this job through Indeed, paste the job posting link in the URL.
+            If you are found this job through Indeed, paste the job posting link
+            in the URL.
           </p>
           <form>
             <TextField
@@ -82,13 +85,19 @@ export default function UrlModal() {
               name="urlLink"
               label="Indeed URL"
               type="text"
-              onChange={(e) => setFormData({ ...formData, URL: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, URL: e.target.value })
+              }
               value={formData.URL}
               margin="normal"
               variant="outlined"
             />
           </form>
-          <Button onClick={handleSubmitIndeedForm} variant="contained" endIcon={<SendIcon />}>
+          <Button
+            onClick={handleSubmitIndeedForm}
+            variant="contained"
+            endIcon={<SendIcon />}
+          >
             Submit{" "}
           </Button>
         </Box>

@@ -10,17 +10,13 @@ import { UPDATE_CARD_LANE } from "../../utils/mutations";
 import Button from "@mui/material/Button";
 import CardModal from "./CardModal";
 
-//cards that will render onto the lanes/columns (examples) - need to create mutation and pull from database
-// const cardApplied = [
-//   { id: uuidv4(), jobTitle: "Full Stack Web Developer" },
-//   { id: uuidv4(), jobTitle: "Senior Developer" },
-// ];
-
 function RenderBoard() {
   //sets state for columns to render the columns
 
   //opens modal - sets it to closed first and then should expand once click button
   const [open, setOpen] = React.useState(false);
+
+  //sets activeCard to the modal that gets selected - will render only 1 modal at a time based off the id
   const [activeCard, setActiveCard] = React.useState("");
   const handleOpen = (id) => {
     setActiveCard(id);
@@ -148,8 +144,6 @@ function RenderBoard() {
         },
       });
 
-      console.log(`id`, result.draggableId);
-
       try {
         const { data } = await updateCard({
           variables: {
@@ -160,31 +154,11 @@ function RenderBoard() {
       } catch (err) {
         console.error(err);
       }
-
-      console.log(`result`, result);
-      // } else {
-      //   //have our columns/lanes and will get by the id
-      //   const column = columns[source.droppableId];
-
-      //   //copying cards so that we are not manipulating our original state
-      //   const copiedCards = [...column.cards];
-
-      //   //need to slice out the card from the array
-      //   const [removed] = copiedCards.splice(source.index, 1);
-      //   copiedCards.splice(destination.index, 0, removed);
-      //   //will allow to set cards in new columns
-      //   setColumns({
-      //     ...columns,
-      //     [source.droppableId]: {
-      //       ...column,
-      //       cards: copiedCards,
-      //     },
-      //   });
     }
   };
 
   return (
-    <div className= "board">
+    <div className="board">
       {/* at minimum needs 'onDragEnd' = dragdropcontext will reorder the items - if drag into a new column, will delete from the old column */}
       {loading ? (
         <div>Loading...</div>
@@ -197,7 +171,7 @@ function RenderBoard() {
             return (
               // takes in the children (cards)
               <div>
-                <h2 style={{textAlign:"center"}}>{column.lane}</h2>
+                <h2 style={{ textAlign: "center" }}>{column.lane}</h2>
                 {/* styling the margin between each column */}
                 <div style={{ margin: 8 }}>
                   <Droppable droppableId={id} key={id}>
@@ -250,7 +224,8 @@ function RenderBoard() {
                                       {item.jobTitle}
                                       {/* when button clicked, will only render one modal that has app info */}
                                       <Button
-                                        sx={{ color: 'text.primary' }} onClick={() => handleOpen(item.appID)}
+                                        sx={{ color: "text.primary" }}
+                                        onClick={() => handleOpen(item.appID)}
                                       >
                                         Expand
                                       </Button>
