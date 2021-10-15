@@ -5,9 +5,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_SINGLE_APPLICATION } from "../../utils/queries";
-
+import { DELETE_APPLICATION } from "../../utils/mutations";
 const style = {
   position: "absolute",
   alignItems: "center",
@@ -30,11 +30,23 @@ export default function CardModal(props) {
     variables: { applicationId: props.appID },
   });
 
+  const [deleteHandler, { error }] = useMutation(DELETE_APPLICATION);
+
   const { onClose, selectedValue, open } = props;
 
   const handleClose = () => {
     onClose(selectedValue);
   };
+
+  try {
+    const { props } = deleteHandler({
+      variables: {
+        _id: data.application._id,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+  }
 
   return (
     <>
@@ -74,7 +86,13 @@ export default function CardModal(props) {
                 </div>
               </Typography>
               <div style={{ marginTop: "10%" }}>
-                <Button>Delete</Button>
+                <Button
+                  onClick={() =>
+                    deleteHandler({ variables: { _id: data.application._id } })
+                  }
+                >
+                  Delete
+                </Button>
               </div>
             </Box>
           </Modal>

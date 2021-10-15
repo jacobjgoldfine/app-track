@@ -267,6 +267,7 @@ function RenderBoard() {
                                         appID={item.appID}
                                         open={open}
                                         onClose={handleClose}
+                                        // onDelete={deleteHandler}
                                         jobTitle={item.jobTitle}
                                         companyName={item.companyName}
                                         salary={item.salary}

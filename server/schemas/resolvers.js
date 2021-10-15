@@ -55,7 +55,11 @@ const resolvers = {
       return { token, user };
     },
 
-    addApplication: async (parent, { jobTitle, companyName, salary, location }, context) => {
+    addApplication: async (
+      parent,
+      { jobTitle, companyName, salary, location },
+      context
+    ) => {
       // if (context.user) {
       const application = await Application.create({
         jobTitle,
@@ -96,12 +100,16 @@ const resolvers = {
     },
 
     updateCard: async (parent, { appID, lane }) => {
-      const app = await Application.findOneAndUpdate({ _id: appID }, { lane: lane }, { new: true });
+      const app = await Application.findOneAndUpdate(
+        { _id: appID },
+        { lane: lane },
+        { new: true }
+      );
       return app;
     },
 
     deleteApp: async (parent, { appID, lane }) => {
-      const del = await Application.findOneAndDelete({ _id: appID });
+      const del = await Application.findOneAndRemove({ _id: appID });
       return del;
     },
   },
