@@ -21,7 +21,7 @@ const style2 = {
   p: 4,
 };
 
-export default function  ManualApp() {
+export default function ManualApp() {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -49,15 +49,15 @@ export default function  ManualApp() {
   // need to add mutation
   const handleManualSubmit = (e) => {
     e.preventDefault();
-    if (formData.jobTitle === "" || formData.jobTitle === null ){
-      alert("Please enter a Job Title")
+    if (formData.jobTitle === "" || formData.jobTitle === null) {
+      alert("Please enter a Job Title");
       return;
     } else if (formData.companyName === "" || formData.companyName === null) {
-      alert(" Please enter a the Company name")
-      return; 
-    } else { 
+      alert(" Please enter a the Company name");
+      return;
+    } else {
       handleClose();
-      console.log('YOU DID IT!')
+      console.log("YOU DID IT!");
       addApplication({
         variables: {
           jobTitle: formData.jobTitle,
@@ -66,7 +66,8 @@ export default function  ManualApp() {
           location: formData.location,
         },
       });
-      console.log(formData);}
+      window.location.reload();
+    }
   };
 
   return (
@@ -130,7 +131,7 @@ export default function  ManualApp() {
               variant="outlined"
             />
           </form>
-          <Button sx={{ ml: 90 }} onClick={handleManualSubmit} variant="contained" type='submit' endIcon={<SendIcon />}>
+          <Button sx={{ ml: 90 }} onClick={handleManualSubmit} variant="contained" type="submit" endIcon={<SendIcon />}>
             Submit Application{" "}
           </Button>
         </Box>
