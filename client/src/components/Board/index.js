@@ -250,7 +250,7 @@ function RenderBoard() {
                                       {item.jobTitle}
                                       {/* when button clicked, will only render one modal that has app info */}
                                       <Button
-                                        onClick={() => handleOpen(item.appID)}
+                                        sx={{ color: 'text.primary' }} onClick={() => handleOpen(item.appID)}
                                       >
                                         Expand
                                       </Button>

@@ -74,9 +74,8 @@ export default function ManualApp() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>New Application</Button>
+      <Button sx={{ mt: 2 }} variant="outlined" size="medium" onClick={handleOpen}>New Application</Button>
       <Modal
-        hideBackdrop
         open={open}
         onClose={handleClose}
         aria-labelledby="child-modal-title"
