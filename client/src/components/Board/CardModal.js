@@ -72,6 +72,7 @@ export default function CardModal(props) {
                 </div>
               </Typography>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+
                 <div style={{ marginTop: "15%" }}>
                   <p>
                     <span style={{ fontWeight: "bold" }}>Company name:</span>{" "}
@@ -85,6 +86,7 @@ export default function CardModal(props) {
                     <span style={{ fontWeight: "bold" }}>Location:</span>{" "}
                     {data.application.location}
                   </p>
+
                 </div>
               </Typography>
               <div style={{ marginTop: "10%" }}>
