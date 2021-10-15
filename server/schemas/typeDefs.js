@@ -18,7 +18,6 @@ const typeDefs = gql`
     salary: String
     location: String
     lane: String
-    id: String
   }
 
   type Auth {

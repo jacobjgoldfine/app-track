@@ -10,16 +10,22 @@ import Link from "@mui/material/Link";
 // import Grid from "@mui/material/Grid";
 import URLModal from "../components/Board/urlModal";
 import ManualApp from "../components/Board/manualAppModel";
-
+import Auth from "../utils/auth";
 
 const Profile = () => {
+  const logout = (event) => {
+    event.preventDefault();
+    Auth.logout();
+  };
   return (
     <main>
       <URLModal />
-      <ManualApp/>
+      <ManualApp />
       <div>
         <Link href="/" variant="body2">
-          <button id="homeBtn">Home</button>
+          <button id="homeBtn" onClick={logout}>
+            Logout
+          </button>
         </Link>
       </div>
       <div className="flex-row justify-center">
