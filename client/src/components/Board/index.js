@@ -175,7 +175,7 @@ function RenderBoard() {
             return (
               // takes in the children (cards)
               <div>
-                <h2>{column.lane}</h2>
+                <h2 style={{textAlign:"center"}}>{column.lane}</h2>
                 {/* styling the margin between each column */}
                 <div style={{ margin: 8 }}>
                   <Droppable droppableId={id} key={id}>
