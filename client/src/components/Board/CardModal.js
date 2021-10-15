@@ -24,7 +24,6 @@ const style = {
 
 export default function CardModal(props) {
   //importing information for one single card to the modal
-  console.log("This is appID", props.appID);
 
   const { loading, data } = useQuery(QUERY_SINGLE_APPLICATION, {
     variables: { applicationId: props.appID },
@@ -38,15 +37,18 @@ export default function CardModal(props) {
     onClose(selectedValue);
   };
 
-  try {
-    const { props } = deleteHandler({
-      variables: {
-        _id: data.application._id,
-      },
-    });
-  } catch (err) {
-    console.error(err);
-  }
+  const removeCard = async (appID) => {
+    try {
+      await deleteHandler({
+        variables: {
+          appID,
+        },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    window.location.reload();
+  };
 
   return (
     <>
@@ -86,13 +88,7 @@ export default function CardModal(props) {
                 </div>
               </Typography>
               <div style={{ marginTop: "10%" }}>
-                <Button
-                  onClick={() =>
-                    deleteHandler({ variables: { _id: data.application._id } })
-                  }
-                >
-                  Delete
-                </Button>
+                <Button onClick={() => removeCard(props.appID)}>Delete</Button>
               </div>
             </Box>
           </Modal>

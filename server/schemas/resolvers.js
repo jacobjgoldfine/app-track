@@ -18,7 +18,6 @@ const resolvers = {
     },
 
     application: async (parent, { applicationId }) => {
-      console.log(applicationId);
       return Application.findById(applicationId);
     },
   },
@@ -52,25 +51,6 @@ const resolvers = {
       { jobTitle, companyName, salary, location },
       context
     ) => {
-<<<<<<< HEAD
-      // if (context.user) {
-      const application = await Application.create({
-        jobTitle,
-        companyName,
-        salary,
-        location,
-      });
-
-      await User.findOneAndUpdate(
-        // { _id: context.user._id },
-        { $addToSet: { applications: application._id } }
-      );
-      console.log("This works!");
-      return application;
-
-      // }
-      // throw new AuthenticationError("You need to be logged in!");
-=======
       if (context.user) {
         const application = await Application.create({
           jobTitle,
@@ -90,7 +70,6 @@ const resolvers = {
       } else {
         throw new AuthenticationError("You need to be logged in!");
       }
->>>>>>> main
     },
 
     ADD_APPLICATION_WITH_URL: async (parent, { URL }, context) => {
@@ -128,8 +107,9 @@ const resolvers = {
       return app;
     },
 
-    deleteApp: async (parent, { appID, lane }) => {
-      const del = await Application.findOneAndRemove({ _id: appID });
+    deleteApp: async (parent, { appID }) => {
+      console.log("APPID", appID);
+      const del = await Application.findOneAndDelete({ _id: appID });
       return del;
     },
   },
