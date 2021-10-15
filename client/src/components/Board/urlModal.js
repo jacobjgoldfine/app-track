@@ -63,7 +63,7 @@ export default function UrlModal() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>New Application With Indeed URL</Button>
+      <Button variant="outlined" size="medium" onClick={handleOpen}>New Application With Indeed URL</Button>
       <Modal
         open={open}
         onClose={handleClose}

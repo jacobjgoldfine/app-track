@@ -5,7 +5,7 @@ import { TextField } from "@mui/material";
 import { useState } from "react";
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_APPLICATION, ADD_APPLICATION_WITH_URL } from "../../utils/mutations";
+import { ADD_APPLICATION } from "../../utils/mutations";
 import SendIcon from "@mui/icons-material/Send";
 
 const style2 = {
@@ -71,9 +71,8 @@ export default function  ManualApp() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>New Application</Button>
+      <Button sx={{ mt: 2 }} variant="outlined" size="medium" onClick={handleOpen}>New Application</Button>
       <Modal
-        hideBackdrop
         open={open}
         onClose={handleClose}
         aria-labelledby="child-modal-title"

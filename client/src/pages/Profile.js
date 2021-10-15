@@ -20,14 +20,15 @@ const Profile = () => {
   return (
     <main>
       <URLModal />
-      <ManualApp />
       <div>
-        <Link href="/" variant="body2">
-          <button id="homeBtn" onClick={logout}>
+        <Link positionhref="/" variant="body2">
+          <button  id="logoutbtn" onClick={logout}>
             Logout
           </button>
         </Link>
       </div>
+      <ManualApp />
+
       <div className="flex-row justify-center">
         <Board />
       </div>
