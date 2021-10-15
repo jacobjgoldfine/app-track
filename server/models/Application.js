@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-// const dateFormat = require("../utils/dateFormat");
 
 const applicationSchema = new Schema({
   jobTitle: {
@@ -9,12 +8,6 @@ const applicationSchema = new Schema({
   companyName: {
     type: String,
   },
-  // questionable?  Do we want to enter manual date or have it autopopulate?
-  // date_submitted: {
-  //   type: Date,
-  //   default: Date.now,
-  //   get: (timestamp) => dateFormat(timestamp),
-  // },
   salary: {
     type: String,
   },
