@@ -24,7 +24,6 @@ export const ADD_USER = gql`
   }
 `;
 
-//This will be imported on either the job board area, or maybe the modal form
 export const ADD_APPLICATION = gql`
   mutation addApplication(
     $jobTitle: String!

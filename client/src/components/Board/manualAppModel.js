@@ -14,7 +14,7 @@ const style2 = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 1000,
-  height: 500,
+  height: 650,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -74,9 +74,8 @@ export default function ManualApp() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>New Application</Button>
+      <Button sx={{ mt: 2 }} variant="outlined" size="medium" onClick={handleOpen}>New Application</Button>
       <Modal
-        hideBackdrop
         open={open}
         onClose={handleClose}
         aria-labelledby="child-modal-title"
