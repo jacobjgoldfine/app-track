@@ -19,13 +19,13 @@ Job hunting can be difficult, but this application can make it a bit easier. App
 
 ## Usage
 
-Users can find the deployed application on Heroku at : Coming Soon! [](#)
+Users can find the deployed application on Heroku at :[Herokulink](https://powerful-reaches-64620.herokuapp.com/)
 
 <!-- To use this application for yourself, the user needs to `git clone` this repository into their terminal. Once they have cloned the repo, the user needs to run `npm install` to get all the dependencies and packages. Once all the dependencies are downloaded, open a new terminal and run `npm run develop` for development mode. -->
 
 ## Technologies
 
-- Javascript, React, JWT, Express, Graphql, Apollo Server, Material UI
+- JavaScript, React, JWT, Node.js, Express, GraphQL, Bcrypt, Apollo Server, Material UI, Scraper API, Node HTML Parser
 
 ## Tests
 
