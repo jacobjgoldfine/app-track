@@ -124,15 +124,16 @@ const Login =() => {
                 autoComplete="current-password"
                 onChange={handleChange}
               />
+              <Link  to= "/profile"> 
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-              <Link to= "/profile">  Sign In </Link>
-              
+               Sign In 
               </Button>
+              </Link>
               <Grid container>
                 <Grid item>
                   <Link href="/signup" variant="body2">
