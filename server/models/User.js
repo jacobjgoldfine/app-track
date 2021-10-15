@@ -26,7 +26,7 @@ const userSchema = new Schema({
   applications: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Application',
+      ref: "Application",
     },
   ],
 });

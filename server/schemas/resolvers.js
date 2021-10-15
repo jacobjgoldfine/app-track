@@ -10,7 +10,9 @@ const resolvers = {
     },
     applications: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("applications");
+        return Application.find({ user_id: context.user._id }).populate(
+          "applications"
+        );
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -45,26 +47,30 @@ const resolvers = {
       return { token, user };
     },
 
-    addApplication: async (parent, { jobTitle, companyName, salary, location }, context) => {
-       if (context.user) {
-      const application = await Application.create({
-        jobTitle,
-        companyName,
-        salary,
-        location,
-      });
+    addApplication: async (
+      parent,
+      { jobTitle, companyName, salary, location },
+      context
+    ) => {
+      if (context.user) {
+        const application = await Application.create({
+          jobTitle,
+          companyName,
+          salary,
+          location,
+          user_id: context.user._id,
+        });
 
-      await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $addToSet: { applications: application._id } }
-      );
-      console.log("This works!");
-      return application;
-
-       }
-       console.log(context)
-      throw new AuthenticationError("You need to be logged in!");
-
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { applications: application._id } },
+          { new: true }
+        );
+        console.log("User ID", context.user._id);
+        return application;
+      } else {
+        throw new AuthenticationError("You need to be logged in!");
+      }
     },
 
     ADD_APPLICATION_WITH_URL: async (parent, { URL }, context) => {
@@ -88,7 +94,11 @@ const resolvers = {
     },
 
     updateCard: async (parent, { appID, lane }) => {
-      const app = await Application.findOneAndUpdate({ _id: appID }, { lane: lane }, { new: true });
+      const app = await Application.findOneAndUpdate(
+        { _id: appID },
+        { lane: lane },
+        { new: true }
+      );
       return app;
     },
   },
