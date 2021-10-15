@@ -80,17 +80,23 @@ const resolvers = {
       const companyName = data.companyName;
       const salary = data.salary;
       const location = data.location;
+      if (context.user) {
+        const application = await Application.create({
+          jobTitle,
+          companyName,
+          location,
+          salary,
+        });
 
-      const application = await Application.create({
-        jobTitle,
-        companyName,
-        location,
-        salary,
-      });
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { application: application._id } }
+        );
 
-      // await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { application: application._id } });
-
-      return application;
+        return application;
+      } else {
+        throw new AuthenticationError("You need to be logged in!");
+      }
     },
 
     updateCard: async (parent, { appID, lane }) => {
