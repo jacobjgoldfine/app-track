@@ -8,26 +8,18 @@ const resolvers = {
     users: async () => {
       return User.find().populate("user");
     },
-
-    // commented out email requirements/user requirments to test
-    applications: async () =>
-      // parent, { email }
-      {
-        // const params = email ? { email } : {};
-        return Application.find().populate("applications");
-        // return Application.find(params).sort({ date_submitted: -1 });
-      },
+    applications: async (parent, args, context) => {
+      if (context.user) {
+        return Application.find({ user_id: context.user._id }).populate(
+          "applications"
+        );
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
 
     application: async (parent, { applicationId }) => {
       console.log(applicationId);
       return Application.findById(applicationId);
-    },
-
-    me: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("applications");
-      }
-      throw new AuthenticationError("You need to be logged in!");
     },
   },
 
@@ -55,24 +47,30 @@ const resolvers = {
       return { token, user };
     },
 
-    addApplication: async (parent, { jobTitle, companyName, salary, location }, context) => {
-      // if (context.user) {
-      const application = await Application.create({
-        jobTitle,
-        companyName,
-        salary,
-        location,
-      });
+    addApplication: async (
+      parent,
+      { jobTitle, companyName, salary, location },
+      context
+    ) => {
+      if (context.user) {
+        const application = await Application.create({
+          jobTitle,
+          companyName,
+          salary,
+          location,
+          user_id: context.user._id,
+        });
 
-      await User.findOneAndUpdate(
-        // { _id: context.user._id },
-        { $addToSet: { applications: application._id } }
-      );
-      console.log("This works!");
-      return application;
-
-      // }
-      // throw new AuthenticationError("You need to be logged in!");
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { applications: application._id } },
+          { new: true }
+        );
+        console.log("User ID", context.user._id);
+        return application;
+      } else {
+        throw new AuthenticationError("You need to be logged in!");
+      }
     },
 
     ADD_APPLICATION_WITH_URL: async (parent, { URL }, context) => {
@@ -82,22 +80,37 @@ const resolvers = {
       const companyName = data.companyName;
       const salary = data.salary;
       const location = data.location;
+      if (context.user) {
+        const application = await Application.create({
+          jobTitle,
+          companyName,
+          location,
+          salary,
+        });
 
-      const application = await Application.create({
-        jobTitle,
-        companyName,
-        location,
-        salary,
-      });
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { application: application._id } }
+        );
 
-      // await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { application: application._id } });
-
-      return application;
+        return application;
+      } else {
+        throw new AuthenticationError("You need to be logged in!");
+      }
     },
 
     updateCard: async (parent, { appID, lane }) => {
-      const app = await Application.findOneAndUpdate({ _id: appID }, { lane: lane }, { new: true });
+      const app = await Application.findOneAndUpdate(
+        { _id: appID },
+        { lane: lane },
+        { new: true }
+      );
       return app;
+    },
+
+    deleteApp: async (parent, { appID, lane }) => {
+      const del = await Application.findOneAndDelete({ _id: appID });
+      return del;
     },
   },
 };
