@@ -18,7 +18,6 @@ const resolvers = {
     },
 
     application: async (parent, { applicationId }) => {
-      console.log(applicationId);
       return Application.findById(applicationId);
     },
   },
@@ -108,7 +107,8 @@ const resolvers = {
       return app;
     },
 
-    deleteApp: async (parent, { appID, lane }) => {
+    deleteApp: async (parent, { appID }) => {
+      console.log("APPID", appID);
       const del = await Application.findOneAndDelete({ _id: appID });
       return del;
     },
