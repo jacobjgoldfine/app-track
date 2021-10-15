@@ -41,7 +41,7 @@ export default function CardModal(props) {
         <div>
           {console.log(data)}
           <Modal
-            open={props.open}
+            open={props.open && props.activeCard === props.appID}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
