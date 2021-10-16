@@ -19,9 +19,11 @@ Job hunting can be difficult, but this application can make it a bit easier. App
 
 ## Usage
 
-Users can find the deployed application on Heroku at :[Herokulink](https://powerful-reaches-64620.herokuapp.com/)
 
-<!-- To use this application for yourself, the user needs to `git clone` this repository into their terminal. Once they have cloned the repo, the user needs to run `npm install` to get all the dependencies and packages. Once all the dependencies are downloaded, open a new terminal and run `npm run develop` for development mode. -->
+Users can find the deployed application on Heroku at : [https://powerful-reaches-64620.herokuapp.com/](https://powerful-reaches-64620.herokuapp.com/)
+
+
+https://user-images.githubusercontent.com/82067962/137564138-1242eaab-353c-4fae-b2fa-a84748ced620.mp4
 
 ## Technologies
 
