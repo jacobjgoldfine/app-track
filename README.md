@@ -19,13 +19,15 @@ Job hunting can be difficult, but this application can make it a bit easier. App
 
 ## Usage
 
+
 Users can find the deployed application on Heroku at : [https://powerful-reaches-64620.herokuapp.com/](https://powerful-reaches-64620.herokuapp.com/)
+
 
 https://user-images.githubusercontent.com/82067962/137564138-1242eaab-353c-4fae-b2fa-a84748ced620.mp4
 
 ## Technologies
 
-- Javascript, React, JWT, Express, Graphql, Apollo Server, Material UI
+- JavaScript, React, JWT, Node.js, Express, GraphQL, Bcrypt, Apollo Server, Material UI, Scraper API, Node HTML Parser
 
 ## Tests
 
